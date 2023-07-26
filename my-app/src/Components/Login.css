@@ -1,0 +1,52 @@
+
+
+
+
+.main-login{
+
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.formbox-login{
+
+    width: 400px;
+    height: 350px;
+    background-color: antiquewhite;
+    border-radius: 20px;
+}
+
+h2{
+
+    text-align: center;
+}
+
+.form-login{
+
+     margin-top: 40px;
+}
+
+.form-login input{
+    margin-left: 60px;
+    width: 250px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+
+.btn-login{
+
+    margin-left: 130px;
+    width: 100px;
+    border: none;
+    background-color: rgb(4, 4, 96);
+    color: white;
+    border-radius: 10px;
+    height:30px ;
+}
+
+
