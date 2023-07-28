@@ -3,14 +3,35 @@
 const express=require("express")
 
 const router=express.Router()
+const db=require("../Database/dbtransfer")
 
 
 
-router.get("/",(req,res)=>{
+router.post("/post",(req,res)=>{
 
-    res.send("welcome")
+    const data=req.body
+    
+    if(data){
+
+        db.dataadd(data).then((respo)=>{
+
+            res.json("data added")
+        
+        
+        }).catch(err=>{
+
+            res.json("failed"+err)
+
+        })
+
+         }else{
+
+           res.json("data not reseving server")
+
+         }
+    
+
 })
-
 
 
 
