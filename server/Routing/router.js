@@ -34,6 +34,17 @@ router.post("/post",(req,res)=>{
 })
 
 
+router.get("/view/cat1",(req,res)=>{
+
+    db.viewcat1()
+
+
+
+
+
+})
+
+
 
 
 

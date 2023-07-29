@@ -9,6 +9,8 @@ import { BsTrash3Fill } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import Navebar from './Navebar';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from "../constant/Axios"
 
 
 
@@ -16,6 +18,21 @@ import { useState } from 'react';
 function Category() {
   
   const [filterbox,setfilterbox]=useState(false)
+
+    
+    useEffect(()=>{
+
+      axios("/view/cat1").then(()=>{
+
+        
+
+      })
+
+      
+
+    })
+
+
 
     
     
@@ -33,7 +50,7 @@ function Category() {
 
         
 
-        <h1>Category 1 </h1>
+        <h1>LLoyd </h1>
 
 
         <div className='input-div'>   

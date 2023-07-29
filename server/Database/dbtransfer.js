@@ -49,6 +49,32 @@ module.exports.dataadd=(data)=>{
 }
 
 
+module.exports.viewcat1=()=>{
+
+
+      return new Promise ((resolve,reject)=>{
+
+            
+        const fetchdb=mongoose.model("data",adddataschema)
+
+
+              const result=fetchdb.find()
+
+
+
+
+              
+
+              console.log(result)
+
+
+
+      })
+
+
+}
+
+
 
 
 
