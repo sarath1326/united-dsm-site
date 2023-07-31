@@ -9,12 +9,14 @@ import Table from 'react-bootstrap/Table';
 import { BsTrash3Fill } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import Navebar from './Navebar';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import  axios from "../constant/Axios"
 
 function Category2() {
 
     const [filterbox,setfilterbox]=useState(false)
     const [filteropt,setfilteropt]=useState("all")
+    const [fetchdata,setfetchdata]=useState([])
 
 
      function bb(value){
@@ -22,6 +24,23 @@ function Category2() {
         setfilteropt(value)
 
      }
+
+
+     useEffect(()=>{
+
+      axios("/view/cat2").then((result)=>{
+
+            setfetchdata(result.data)
+
+
+      })
+
+
+
+
+
+
+     })
 
 
 
@@ -44,7 +63,7 @@ function Category2() {
 
   
 
-  <h1>Category 2 </h1>
+  <h1> blueberry , carrier  </h1>
 
 
   <div className='input-div'>   
@@ -93,33 +112,41 @@ function Category2() {
               <th> enter date</th>
               <th> return marking</th>
               <th> Delete</th>
-
-
-
-              
-              
-              </tr>
+            
+            </tr>
 
          </thead>
          <tbody>
 
-          <tr>
-               <th> 1</th>  
-              <td>sarath</td>
-              <td> 7592831937</td>
-              <td> lloyd</td>
-              <td>ac</td>
-              <td>coil</td>
-              <td> 20/5/23</td>
+
+
+          {
+
+          fetchdata.map((obj,index)=>
+          
+           (
+
+
+            <tr>
+               <th> {index+1}</th>  
+              <td>{obj.cuname }</td>
+              <td> {obj.mobile}</td>
+              <td> {obj.brand}</td>
+              <td>{obj.product}</td>
+              <td>{obj.defectpart}</td>
+              <td>{obj.date}20/5/23</td>
               <td> <input type='checkbox'/></td>
               <td id='icon'> <BsTrash3Fill/> </td>
                 </tr>
 
-                
-                
-                
-                
-                </tbody>
+
+                  )
+          
+                   )
+          
+                }
+
+              </tbody>
 
                 </Table>
 

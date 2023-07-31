@@ -51,31 +51,67 @@ module.exports.dataadd=(data)=>{
 
 module.exports.viewcat1=()=>{
 
+       const obj={}
 
-      return new Promise ((resolve,reject)=>{
+
+      return new Promise ( async(resolve,reject)=>{
 
             
-        const fetchdb=mongoose.model("data",adddataschema)
+        const fetchdb= mongoose.model("data",adddataschema)
 
 
-              const result=fetchdb.find()
+              const result=  await fetchdb.find()
+
+                 if(result){
+
+                    obj.flag=true
+                    obj.data=result
+
+                    resolve(obj)
+                 
+                }else{
+                    resolve({flag:false})
+                }
+             
+
+             })
 
 
 
-
-              
-
-              console.log(result)
+            }
 
 
+  
 
-      })
+     module.exports.viewcat2=()=>{
+
+        const obj={}
+
+        return new Promise(async(resolve,reject)=>{
+
+            const fetchdb= mongoose.model("data",adddataschema)
 
 
-}
+                const result= await fetchdb.find({brand:{$in:["blueberry","carrier"]}})
+
+                 if(result){
+                    obj.flag=true
+                    obj.data=result
+
+                    resolve(obj)
+                
+                
+                }else{
+
+                    resolve({flag:false})
+
+                 }
 
 
 
+        })
+
+     }        
 
 
   

@@ -18,11 +18,14 @@ import axios from "../constant/Axios"
 function Category() {
   
   const [filterbox,setfilterbox]=useState(false)
+  const [fetchdata,setfetchdata]=useState([])
 
     
     useEffect(()=>{
 
-      axios("/view/cat1").then(()=>{
+      axios("/view/cat1").then((result)=>{
+
+          setfetchdata(result.data)
 
         
 
@@ -111,20 +114,41 @@ function Category() {
 
                </thead>
                <tbody>
+                
+          {
 
-                <tr>
-                     <th> 1</th>  
-                    <td>sarath</td>
-                    <td> 7592831937</td>
-                    <td> lloyd</td>
-                    <td>ac</td>
-                    <td>coil</td>
-                    <td> 20/5/23</td>
+            fetchdata.map((obj,index)=>
+
+            (
+
+
+              <tr>
+                     <th>{index+1}</th>  
+                    <td>{obj.cuname}</td>
+                    <td> {obj.mobile}</td>
+                    <td> {obj.brand}</td>
+                    <td>{obj.product}</td>
+                    <td>{obj.defectpart}</td>
+                    <td> {obj.date}</td>
                     <td> <input type='checkbox'/></td>
                     <td id='icon'> <BsTrash3Fill/> </td>
                       </tr>
 
-                      
+
+
+
+
+            )
+
+          )
+
+
+          
+
+
+                
+
+          } 
                       
                       
                       

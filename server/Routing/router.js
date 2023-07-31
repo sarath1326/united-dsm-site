@@ -36,9 +36,42 @@ router.post("/post",(req,res)=>{
 
 router.get("/view/cat1",(req,res)=>{
 
-    db.viewcat1()
+    db.viewcat1().then((respo)=>{
+
+        if(respo.flag){
+            res.json(respo.data)
+
+        }else{
+
+            res.sendStatus(404)
+
+        }
+
+    })
 
 
+
+
+
+})
+
+
+router.get("/view/cat2",(req,res)=>{
+
+    db.viewcat2().then((respo)=>{
+
+         if(respo.flag){
+           
+            res.json(respo.data)
+        
+        }else{
+            res.sendStatus(404)
+        }
+
+
+    })
+
+     
 
 
 

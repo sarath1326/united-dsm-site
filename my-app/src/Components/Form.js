@@ -72,11 +72,46 @@ function Form() {
 
             <input type='text' name='mobile' placeholder='mobile no' required="true" onChange={(e)=>{setmobile(e.target.value)}} /><br/><br/>
 
-            <input type='text' name='barnd' placeholder='barnd' required="true" onChange={(e)=>{setbrand(e.target.value)}}  /><br/><br/>
+            <input list='branddata' name='barnd' placeholder='barnd' required="true" onChange={(e)=>{setbrand(e.target.value)}}  /><br/><br/>
             
 
-            <input type='text' name='product' placeholder='product' required="true" onChange={(e)=>{setproduct(e.target.value)}} /><br/><br/>
+            <datalist id='branddata'>
 
+              <option value={"LLoyd"} />
+              <option value={"blueberry"} />
+              <option value={"amstard"} />
+              <option value={"carrier"} />
+              <option value={"onida"} />
+              <option value={"other"} />
+
+
+
+            </datalist>
+
+
+
+
+
+
+
+            <input list='prodata' name='product' placeholder='product' required="true" onChange={(e)=>{setproduct(e.target.value)}} /><br/><br/>
+
+                     <datalist id='prodata'>
+
+                      <option value={"AC"}   />
+                      <option value={"TV"}   />
+                      <option value={"Wm"}   />
+                      <option value={"gas-other"}   />
+                      
+
+
+
+
+
+                     </datalist>
+            
+            
+            
             <input type='text' name='defectpart' placeholder='Defect part' required="true" onChange={(e)=>{setdefectpart(e.target.value)}} /><br/><br/>
 
             <input type='date' name='date' placeholder='enter date' required="true" onChange={(e)=>{setdate(e.target.value)}} /><br/><br/>
