@@ -3,6 +3,7 @@
 import React from 'react'
 import Navebar from './Navebar'
 import "./Login.css"
+import { BsFillPersonFill } from "react-icons/bs";
 
 function Login() {
 
@@ -16,6 +17,8 @@ function Login() {
 
             <div className='formbox-login'>
 
+              <BsFillPersonFill className='icon-login' />
+
                 <h2> Login </h2>
 
                 <form className='form-login'>
@@ -24,14 +27,13 @@ function Login() {
 
                     <input type='text' name='password' placeholder='password' /><br/><br/>
 
-                    <button className='btn-login'> Login</button>
+                    {/* <button className='btn-login'> Login</button> */}
+                 
+                  </form>
 
+                  <button className='btn-login'> Login</button><br/>
 
-
-
-
-
-                </form>
+                  <a className='a'> change your password ? </a>
 
 
 

@@ -78,6 +78,23 @@ router.get("/view/cat2",(req,res)=>{
 })
 
 
+router.get("/view/cat3",(req,res)=>{
+
+    db.viewcat3().then((repso)=>{
+
+        if(repso.flag){
+            
+            res.json(repso.data)
+       
+        }else{
+            res.sendStatus(404)
+        
+        }
+   
+    })
+
+})
+
 
 
 

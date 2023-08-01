@@ -12,6 +12,7 @@ import Category2 from './Components/Category2';
 import Category3 from './Components/Category3';
 import Form from './Components/Form';
 import Login from './Components/Login';
+import Signup from './Components/Signup';
 
 
 
@@ -39,6 +40,8 @@ function App() {
       <Route element={ <Form />} path='/form'   />
 
       <Route  element={ <Login />} path='/login'/>
+
+      <Route  element={<Signup />} path='/sig' />
 
       </Routes>
 

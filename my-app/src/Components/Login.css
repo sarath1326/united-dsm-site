@@ -16,13 +16,14 @@
 
     width: 400px;
     height: 350px;
-    background-color: antiquewhite;
+    background-color: rgb(159, 13, 127);
     border-radius: 20px;
 }
 
 h2{
 
     text-align: center;
+    color: white;
 }
 
 .form-login{
@@ -32,7 +33,7 @@ h2{
 
 .form-login input{
     margin-left: 60px;
-    width: 250px;
+    width: 300px;
     border-radius: 10px;
     margin-bottom: 20px;
 }
@@ -40,13 +41,26 @@ h2{
 
 .btn-login{
 
-    margin-left: 130px;
+    margin-left: 150px;
     width: 100px;
     border: none;
     background-color: rgb(4, 4, 96);
     color: white;
     border-radius: 10px;
     height:30px ;
+    font-weight: bold;
 }
 
+.icon-login{
+    color: white;
+    font-size: 50px;
+    margin-left: 180px;
+}
 
+.a{
+    margin-left: 120px;
+    color: white;
+    text-decoration: none;
+    
+    
+}

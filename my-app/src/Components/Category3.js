@@ -8,7 +8,8 @@ import Table from 'react-bootstrap/Table';
 import { BsTrash3Fill } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import Navebar from './Navebar';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import axios from "../constant/Axios"
 
 
 
@@ -18,6 +19,23 @@ import { useState } from 'react';
 function Category3() {
 
     const [filterbox,setfilterbox]=useState(false)
+
+    const [fetchdata,setfetchdata]=useState([])
+
+
+
+    useEffect(()=>{
+
+      axios("/view/cat3").then((result)=>{
+
+        setfetchdata(result.data)
+        console.log(result.data)
+
+      })
+
+
+
+    },[])
   
   
   
@@ -97,20 +115,33 @@ function Category3() {
          </thead>
          <tbody>
 
-          <tr>
-               <th> 1</th>  
-              <td>sarath</td>
-              <td> 7592831937</td>
-              <td> lloyd</td>
-              <td>ac</td>
-              <td>coil</td>
-              <td> 20/5/23</td>
-              <td> <input type='checkbox'/></td>
-              <td id='icon'> <BsTrash3Fill/> </td>
-                </tr>
+         {
+          fetchdata.map((obj,index)=>
+
+            (
+            <tr>
+            <th> {index+1}</th>  
+           <td>{obj.cuname }</td>
+           <td> {obj.mobile}</td>
+           <td> {obj.brand}</td>
+           <td>{obj.product}</td>
+           <td>{obj.defectpart}</td>
+           <td>{obj.date}20/5/23</td>
+           <td> <input type='checkbox'/></td>
+           <td id='icon'> <BsTrash3Fill/> </td>
+             </tr>
+
+
+            )
+
+
+
+          )
+         
+         
 
                 
-                
+         }
                 
                 
                 </tbody>
