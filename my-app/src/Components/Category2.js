@@ -17,6 +17,8 @@ function Category2() {
     const [filterbox,setfilterbox]=useState(false)
     const [filteropt,setfilteropt]=useState("all")
     const [fetchdata,setfetchdata]=useState([])
+    const [fillterdata,setfillterdata]=useState([])
+
 
 
      function bb(value){
@@ -31,6 +33,7 @@ function Category2() {
       axios("/view/cat2").then((result)=>{
 
             setfetchdata(result.data)
+            setfillterdata(result.data)
 
 
       })
@@ -40,7 +43,17 @@ function Category2() {
 
 
 
-     })
+     },[])
+
+     function fillter(value){
+
+          const res= fillterdata.filter(obj=>obj.cuname.toLowerCase().includes(value) || obj.mobile.includes(value)   )
+
+          setfetchdata(res)
+
+
+     }
+
 
 
 
@@ -68,7 +81,7 @@ function Category2() {
 
   <div className='input-div'>   
 
-  <input type='text' placeholder='Search here'   /> 
+  <input type='text' placeholder='Search here' onChange={(e)=>{fillter(e.target.value)}}  /> 
 
     <span className='span' onClick={()=>{setfilterbox(!filterbox)}}> <FiFilter/>   </span>
     <span className='filter-opt'>{filteropt} </span>
