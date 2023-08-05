@@ -11,9 +11,10 @@ import Navebar from './Navebar';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from "../constant/Axios"
+import { useNavigate } from 'react-router-dom';
 
 
-
+axios.defaults.withCredentials=true
 
 function Category() {
   
@@ -21,21 +22,29 @@ function Category() {
   const [fetchdata,setfetchdata]=useState([])
   const [fillterdata,setfillterdata]=useState([])
 
+  const navigate=useNavigate();
+
     
     useEffect(()=>{
 
       axios("/view/cat1").then((result)=>{
 
-          setfetchdata(result.data)
-          setfillterdata(result.data)
+        if(result.data.notlogin){
+
+          navigate('/login');
+
+        }
+
+          setfetchdata(result.data);
+          setfillterdata(result.data);
 
         
 
-      })
+      });
 
       
 
-    },[])
+    },[]);
 
     function fillter(value){
       

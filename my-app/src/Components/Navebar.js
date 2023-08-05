@@ -13,11 +13,45 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import {FaUserAlt } from "react-icons/fa"
 import { useNavigate } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+
+import axios from "../constant/Axios";
+import { useState,useEffect } from 'react';
 
 
 function Navebar() {
 
- const navigate=useNavigate()
+  const navigate=useNavigate();
+  const [uasername,setusername]=useState('');
+
+  useEffect(()=>{
+
+    axios("/navebar/getusername").then((respo)=>{
+
+      if(respo.data.flag){
+
+        setusername(respo.data.data);
+
+       }else {
+
+        setusername("");
+
+       };
+
+
+
+    });
+
+
+
+  },[]);
+
+
+
+
+
+
+
 
   return (
     <div>
@@ -48,7 +82,53 @@ function Navebar() {
               </NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link  className='login' onClick={()=>{navigate("/login")}}> <span className='login-text'> Login</span>  <span  className='icon'> <FaUserAlt /> </span>    </Nav.Link>
+           <span className='login-text'> { uasername  }</span>  
+            
+            <span  className='icon'> 
+            
+            <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        
+        <FaUserAlt />
+       
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item onClick={()=>{navigate('/login')}}>Login</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Logut</Dropdown.Item>
+      
+      </Dropdown.Menu>
+    </Dropdown>
+            
+            
+            
+            
+            
+            
+            
+             </span>   
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+           
+          
+          
+          
+          
+          
+          
+          
+          
+          
           
           </Nav>
           

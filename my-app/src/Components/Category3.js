@@ -10,6 +10,7 @@ import { FiFilter } from "react-icons/fi";
 import Navebar from './Navebar';
 import { useState,useEffect } from 'react';
 import axios from "../constant/Axios"
+import {  useNavigate } from 'react-router-dom';
 
 
 
@@ -23,12 +24,20 @@ function Category3() {
     const [fetchdata,setfetchdata]=useState([])
     const [fillterdata,setfillterdata]=useState([])
 
+    const navigate=useNavigate();
+
 
 
 
     useEffect(()=>{
 
       axios("/view/cat3").then((result)=>{
+
+        if(result.data.notlogin){
+
+          navigate('/login');
+
+        }
 
         setfetchdata(result.data)
         setfillterdata(result.data)

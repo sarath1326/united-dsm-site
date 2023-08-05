@@ -2,6 +2,7 @@
 
 
 const mongoose=require("mongoose")
+const bcrypt=require('bcrypt')
 
 const adddataschema=new mongoose.Schema({
 
@@ -14,6 +15,22 @@ const adddataschema=new mongoose.Schema({
 
 
 })
+
+
+const authentication_schema= new mongoose.Schema({
+
+    name:String,
+    mobile:String,
+    username:String,
+    password:String
+
+})
+
+
+
+
+
+
 
 
 
@@ -142,6 +159,75 @@ module.exports.viewcat1=()=>{
 
 
         })
+
+     }
+
+     module.exports.signup=(data)=>{
+
+        return new Promise ( async(resolve,reject)=>{
+
+            const signupdb=mongoose.model("user",authentication_schema)
+
+            data.password = await  bcrypt.hash(data.password,10)
+
+            const final= new signupdb(data)
+
+            final.save().then((result)=>{
+                
+                resolve(result)
+
+            })
+
+
+
+        })
+
+     }
+
+     module.exports.login=(data)=>{
+
+        const obj={}
+
+        return new Promise (async(resolve,reject)=>{
+
+            const logindb=mongoose.model("user",authentication_schema)
+
+
+            const fetchdata= await logindb.findOne({username:data.username})
+
+            if(fetchdata){
+
+            const status = await bcrypt.compare(data.password,fetchdata.password)
+
+            if(status){
+                console.log("login sucss")
+                obj.flag=true
+                obj.data=fetchdata
+                resolve(obj)
+           
+           
+            }else{
+                console.log("password not valid")
+                
+                resolve({flag:false})
+            
+            }
+
+           
+        
+        }else{
+            
+            console.log("username not valid");
+           
+            resolve({flag:false})
+        
+        }
+
+
+
+        })
+
+
 
      }
 
