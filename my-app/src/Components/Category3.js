@@ -31,20 +31,53 @@ function Category3() {
 
     useEffect(()=>{
 
-      axios("/view/cat3").then((result)=>{
+      axios("/view/cat3",{
 
-        if(result.data.notlogin){
+        headers:{
 
-          navigate('/login');
+          "jwt-token" :localStorage.getItem("token")
 
         }
 
-        setfetchdata(result.data)
-        setfillterdata(result.data)
+
+      
+      
+       } ).then((result)=>{
 
 
-      })
 
+        const fetchdata=result.data
+
+        console.log("fetchdata",fetchdata)
+
+
+        if(fetchdata.faildauth){
+
+          navigate("/login")   
+        
+        
+        }else if(fetchdata.details.flag){
+
+           const result=fetchdata.details
+         
+         
+            setfetchdata(result.data);
+          
+          setfillterdata(result.data);
+
+
+           } else {
+
+           
+            navigate("/")
+          
+          }
+
+
+         });
+
+
+        
 
 
     },[])

@@ -31,23 +31,49 @@ function Category2() {
      }
 
 
-     useEffect(()=>{
+     useEffect(()=>{axios("/view/cat2",{
 
-      axios("/view/cat2").then((result)=>{
+        headers:{
 
-        if(result.data.notlogin){
-
-          navigate('/login');
+          "jwt-token" :localStorage.getItem("token")
 
         }
+      
+      }).then((result)=>{
 
 
+        
+        const fetchdata=result.data
 
-            setfetchdata(result.data)
-            setfillterdata(result.data)
+        console.log("fetchdata",fetchdata)
 
 
-      })
+        if(fetchdata.faildauth){
+
+          navigate("/login")   
+        
+        
+        }else if(fetchdata.details.flag){
+
+           const result=fetchdata.details
+         
+         
+            setfetchdata(result.data);
+          
+          setfillterdata(result.data);
+
+
+           } else {
+
+           
+            navigate("/")
+          
+          }
+
+
+         });
+
+        
 
 
 

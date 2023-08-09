@@ -24,27 +24,41 @@ function Navebar() {
   const navigate=useNavigate();
   const [uasername,setusername]=useState('');
 
-  useEffect(()=>{
 
-    axios("/navebar/getusername").then((respo)=>{
-
-      if(respo.data.flag){
-
-        setusername(respo.data.data);
-
-       }else {
-
-        setusername("");
-
-       };
+      
+      useEffect(()=>{
 
 
+        axios("/username/navbar",{
+          headers:{
+            
+            "jwt-token" :localStorage.getItem("token")
 
-    });
+          }
+
+        }).then((respo)=>{
+
+            const fetchdata=respo.data
+
+             if(fetchdata.flag){
+
+              setusername(fetchdata.userdata.name)
+
+             }else{
+
+              setusername("")
+             }
 
 
 
-  },[]);
+        })
+
+
+
+
+
+
+      },[])
 
 
 
@@ -52,6 +66,8 @@ function Navebar() {
 
 
 
+
+  
 
   return (
     <div>
@@ -82,7 +98,7 @@ function Navebar() {
               </NavDropdown.Item>
             </NavDropdown>
 
-           <span className='login-text'> { uasername  }</span>  
+           <span className='login-text'> {uasername ? uasername : null}        </span>  
             
             <span  className='icon'> 
             
@@ -94,8 +110,17 @@ function Navebar() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
+
+        { uasername ?  <Dropdown.Item href="#/action-2">Logout</Dropdown.Item>
+
+        :
+             
         <Dropdown.Item onClick={()=>{navigate('/login')}}>Login</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Logut</Dropdown.Item>
+
+  }
+       
+       
+      
       
       </Dropdown.Menu>
     </Dropdown>

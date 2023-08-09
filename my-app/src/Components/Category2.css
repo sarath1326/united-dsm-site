@@ -113,3 +113,9 @@ h6{
     color: rgb(250, 110, 110);
 }
 
+.tick-mark{
+
+    color: green;
+    font-size: 25px;
+}
+

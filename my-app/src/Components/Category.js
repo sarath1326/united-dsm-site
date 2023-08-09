@@ -12,6 +12,9 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from "../constant/Axios"
 import { useNavigate } from 'react-router-dom';
+import { GiCheckMark } from "react-icons/gi";
+import {message } from "antd" 
+import Swal from "sweetalert2"    
 
 
 axios.defaults.withCredentials=true
@@ -27,24 +30,50 @@ function Category() {
     
     useEffect(()=>{
 
-      axios("/view/cat1").then((result)=>{
+      axios("/view/cat1",{
 
-        if(result.data.notlogin){
+        headers:{
 
-          navigate('/login');
+          "jwt-token" :localStorage.getItem("token")
 
         }
 
-          setfetchdata(result.data);
+
+      }).then((result)=>{
+
+        const fetchdata=result.data
+
+        console.log("fetchdata",fetchdata)
+
+
+        if(fetchdata.faildauth){
+
+          navigate("/login")   
+        
+        
+        }else if(fetchdata.details.flag){
+
+           const result=fetchdata.details
+         
+         
+            setfetchdata(result.data);
+          
           setfillterdata(result.data);
 
-        
 
-      });
+           } else {
+
+           
+            navigate("/")
+          
+          }
+
+
+         });
 
       
 
-    },[]);
+    }, [] );
 
     function fillter(value){
       
@@ -61,6 +90,31 @@ function Category() {
     }
 
     console.log(fetchdata);
+
+
+
+    function retun_marking(){
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+     
+      
+    }
 
 
 
@@ -100,6 +154,7 @@ function Category() {
           <h6>Lloyd</h6>
 
           </div>
+
 
           : null
 
@@ -157,7 +212,9 @@ function Category() {
                     <td>{obj.product}</td>
                     <td>{obj.defectpart}</td>
                     <td> {obj.date}</td>
-                    <td> <input type='checkbox'/></td>
+                    
+                   <td>  <input type='checkbox' onClick={retun_marking}     /> <GiCheckMark className='tick-mark' /></td>
+                   
                     <td id='icon'> <BsTrash3Fill/> </td>
                       </tr>
 

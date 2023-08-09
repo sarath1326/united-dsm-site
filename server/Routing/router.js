@@ -4,25 +4,60 @@ const express=require("express")
 
 const router=express.Router()
 const db=require("../Database/dbtransfer")
-// const uuidv4=require("uuid")
+const loginmail=require("../Email/Loginmail")
+
+const jwt =require("jsonwebtoken")
 
 
 
 
- function logincheck(req,res,next){
+  //jwt acthverify midilware (starting)
 
-       if(req.session.loginok){
+ const verifyauth=(req,res,next)=>{
 
-        next();
+      const token= req.headers["jwt-token"];
 
-       }else{
-          
-          res.json({notlogin:true})  
-      
+    if(!token){
+
+        console.log("no token")
+        
+        res.json({faildauth:true});
+
+          }else{
+
+        jwt.verify(token,"sarath1937" ,(err,result)=>{
+
+             if(result){
+                
+                next()
+            
+            
+            }else{
+                
+                console.log("not valid token")
+                
+                res.json({faildauth:true})
+            
+            
+            }
+
+        })
+
+
     }
 
- };
 
+}
+
+
+
+ //jwt acthverify midilware (end)
+
+
+
+
+
+ 
 
 
 
@@ -53,20 +88,15 @@ router.post("/post",(req,res)=>{
 })
 
 
-router.get("/view/cat1",logincheck,(req,res)=>{
+router.get("/view/cat1",verifyauth,(req,res)=>{
 
-    
+    console.log("hello")
 
     db.viewcat1().then((respo)=>{
 
-        if(respo.flag){
-            res.json(respo.data)
+        res.json({details:respo,faildauth:false})
 
-        }else{
-
-            res.sendStatus(404)
-
-        }
+        
 
     })
 
@@ -77,18 +107,11 @@ router.get("/view/cat1",logincheck,(req,res)=>{
 })
 
 
-router.get("/view/cat2",logincheck,(req,res)=>{
+router.get("/view/cat2",verifyauth,(req,res)=>{
 
     db.viewcat2().then((respo)=>{
 
-         if(respo.flag){
-           
-            res.json(respo.data)
-        
-        }else{
-            res.sendStatus(404)
-        }
-
+        res.json({details:respo,faildauth:false})
 
     })
 
@@ -99,18 +122,14 @@ router.get("/view/cat2",logincheck,(req,res)=>{
 })
 
 
-router.get("/view/cat3",logincheck,(req,res)=>{
+router.get("/view/cat3",verifyauth,(req,res)=>{
 
-    db.viewcat3().then((repso)=>{
+    db.viewcat3().then((respo)=>{
 
-        if(repso.flag){
-            
-            res.json(repso.data)
-       
-        }else{
-            res.sendStatus(404)
+        res.json({details:respo,faildauth:false})
+
+
         
-        }
    
     })
 
@@ -140,46 +159,77 @@ router.post("/login",(req,res)=>{
         if(result.flag){
 
             const user=result.data
-            
-            req.session.user=user
-            req.session.loginok=true
 
-            res.json({check:true})
+            const {name,_id}=user
+            
+           // jwt token creation
+
+           const token= jwt.sign({name:name,id:_id},"sarath1937" ,{
+            
+            expiresIn:300
+           
+        })
+
+           
+           //mail sent
+             loginmail.loginmail();
+
+             res.json({check:true,jwttoken:token});
 
         }else{
 
         
-            res.json({check:false})
+            res.json({check:false});
 
-        }
+        };
 
           
 
     
+        });
+
+
+
+});
+
+
+router.get("/username/navbar",(req,res)=>{
+
+    const token= req.headers["jwt-token"];
+
+    if(!token){
+
+        res.json({flag:false})
+    
+    }else{
+
+        jwt.verify(token ,"sarath1937",(err,result)=>{
+
+            if(result){
+
+              res.json({flag:true,userdata:result})
+
+
+
+            }else{
+
+                res.json({flag:false})
+            }
+
         })
+
+    }
+
+
+
+
+
 
 
 
 })
 
 
-router.get("/navebar/getusername",(req,res)=>{
-
-    const userdetails=req.session.user;
-
-    if(req.session.loginok){
-        
-        
-        res.json({flag:true , data:userdetails.name});
-    
-    
-    }else{
-
-        res.json({flag:false})
-
-    }
-
-});
 
 
 

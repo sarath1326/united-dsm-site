@@ -11,6 +11,9 @@ import {  useNavigate } from 'react-router-dom';
 
 function Login() {
 
+
+  axios.defaults.withCredentials=true
+
   const [username,setusername]=useState('');
   const [password,setpassword]=useState('' );
   const [erricon,seterricon]=useState(false)
@@ -29,8 +32,15 @@ function Login() {
 
        
        if(result.data.check){
-            
-         navigate('/')
+
+        console.log(result.data)
+
+        const jwttoken= result.data.jwttoken
+
+        
+        localStorage.setItem("token" ,jwttoken)
+        
+        navigate('/')
       
         
         }else{
