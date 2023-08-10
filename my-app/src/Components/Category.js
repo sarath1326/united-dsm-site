@@ -5,7 +5,7 @@
 import React from 'react'
 import "./Category.css"
 import Table from 'react-bootstrap/Table';
-import { BsTrash3Fill } from "react-icons/bs";
+import { BsTrash3Fill,BsSend } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import Navebar from './Navebar';
 import { useState } from 'react';
@@ -14,7 +14,8 @@ import axios from "../constant/Axios"
 import { useNavigate } from 'react-router-dom';
 import { GiCheckMark } from "react-icons/gi";
 import {message } from "antd" 
-import Swal from "sweetalert2"    
+ 
+import { BiSolidErrorAlt } from "react-icons/bi"; 
 
 
 axios.defaults.withCredentials=true
@@ -24,10 +25,14 @@ function Category() {
   const [filterbox,setfilterbox]=useState(false)
   const [fetchdata,setfetchdata]=useState([])
   const [fillterdata,setfillterdata]=useState([])
+  const [alert,setalert]=useState(false)
+  const [dataid,setdataid]=useState("")
+  const [check,setcheck]=useState(false)
+  const [indexvalue,setindexvalue]=useState("")
 
   const navigate=useNavigate();
 
-    
+     
     useEffect(()=>{
 
       axios("/view/cat1",{
@@ -56,7 +61,7 @@ function Category() {
            const result=fetchdata.details
          
          
-            setfetchdata(result.data);
+            setfetchdata(result.data,{partretun:false});
           
           setfillterdata(result.data);
 
@@ -92,35 +97,128 @@ function Category() {
     console.log(fetchdata);
 
 
+    function return_marking(id,index){
 
-    function retun_marking(){
+      setalert(true)
+      setdataid(id)
+      setindexvalue(index)
 
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
+     }
+
+     function sendapi(){
+
+      const id=dataid
+      const index=indexvalue
+
+
+      axios("/partsend?id="+id).then((respo)=>{
+
+          if(respo){
+
+            setcheck(true)
+            setalert(false)
+
+            fetchdata[index].retunmark = true 
+            
+            message.success("Part retun marking Sucssfully...!")
+
+
+          }else{
+
+            setcheck(false)
+            setalert(false)
+            message.success("Part retun marking Failed...!")
+
+
+
+          }  
+
+
       })
-     
-      
-    }
 
+     
+
+
+
+     }
+
+
+     function deletepart(id,date,retundate){
+
+      if(!retundate){
+        
+        message.error("this part not return.not delete")
+
+        return 
+
+        
+      }else{
+
+
+        const repartdate="08/1/2023"
+
+       
+
+        let today = new Date();
+        let year = today.getFullYear();
+        let mon = today.getMonth()+1;
+        let day = today.getDate();
+        
+        let cudate =mon+"-"+day+"-"+year;
+
+        let redate= new Date(repartdate)
+
+        let curentdate= new Date(cudate)
+
+
+        let Difference_In_Time = curentdate.getTime() - redate.getTime();
+      
+   
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+
+        console.log(Difference_In_Days)
+
+         }
+
+
+         if(Difference_In_Days >= 7){
+
+             message.success("data deleted")
+
+
+
+         }else{
+
+          message.error("data deleted failed")
+
+         }
+
+         
+        
+      
+
+
+
+
+     }
+
+    
+     
+    
+    
+    
+    
+
+
+
+   
 
 
     
     
   return (
+    
     <div  >
 
       <Navebar/>
@@ -213,10 +311,19 @@ function Category() {
                     <td>{obj.defectpart}</td>
                     <td> {obj.date}</td>
                     
-                   <td>  <input type='checkbox' onClick={retun_marking}     /> <GiCheckMark className='tick-mark' /></td>
+                   <td>   { obj.retunmark ? <>   <GiCheckMark className='tick-mark' />  <span>{obj.retundate}</span>  </>
+
                    
-                    <td id='icon'> <BsTrash3Fill/> </td>
+                   : <BsSend className='tick-mark' onClick={()=>{return_marking(obj._id,index)}} /> }  </td>
+                   
+                    
+                    
+                    
+                    
+                    <td id='icon' onClick={()=>{deletepart(obj._id,obj.date,obj.retundate) }}    > <BsTrash3Fill/> </td>
+                  
                       </tr>
+                      
 
 
 
@@ -241,8 +348,34 @@ function Category() {
                       </Table>
 
 
+            {   
+            
+            alert &&
 
+           <div className='alert-box'>
 
+            <div className='icon-alert-main'>
+
+              <BiSolidErrorAlt className='waring-icon' />
+
+            </div>
+
+            <h4> Are you sure this defect part sent to Return</h4>
+
+           <div className='btngroup'>            
+            
+            <button className='btn-back' onClick={()=>{setalert(false)}}   >Get Back</button>
+           
+           <button className='btn-conf' onClick={sendapi}   >conform</button>
+
+           </div>
+
+            </div> 
+
+            
+
+}
+ 
 
 
           

@@ -64,26 +64,33 @@ const jwt =require("jsonwebtoken")
 router.post("/post",(req,res)=>{
 
     const data=req.body
-    
+
     if(data){
 
         db.dataadd(data).then((respo)=>{
 
-            res.json("data added")
-        
-        
+            if(respo){
+
+              res.json({flag:true})
+
+            }else{
+                res.json({flag:false})
+            }
+
         }).catch(err=>{
 
-            res.json("failed"+err)
+
+            res.json({flag:false})
 
         })
 
-         }else{
 
-           res.json("data not reseving server")
 
-         }
+
+    }
+
     
+
 
 })
 
@@ -221,13 +228,48 @@ router.get("/username/navbar",(req,res)=>{
     }
 
 
-
-
-
-
-
-
 })
+
+
+
+    router.get("/partsend",(req,res)=>{
+
+        console.log(req.query.id)
+
+        db.retunmark(req.query.id).then((respo)=>{ 
+
+            if(respo){
+
+              res.json({flag:true})
+
+
+            }else{
+
+                res.json({flag:false})
+
+                     
+            
+            }
+
+        })
+
+
+
+
+
+    })
+
+
+
+
+   
+
+
+
+
+
+
+
 
 
 

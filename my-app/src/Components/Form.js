@@ -6,6 +6,7 @@ import "./Form.css"
 import { useState } from 'react'
 import axios from "../constant/Axios"
 import { useNavigate } from 'react-router-dom'
+import {message } from "antd" 
 
 
 function Form() {
@@ -17,6 +18,9 @@ function Form() {
   const [product,setproduct]=useState("")
   const [defectpart,setdefectpart]=useState("")
   const [date,setdate]=useState("")
+  const [retunmark,setretunmark]=useState(false)
+  const [retundate,setretundate]=useState("")
+ 
 
   const navigate=useNavigate()
 
@@ -26,7 +30,9 @@ function Form() {
     brand,
     product,
     defectpart,
-    date
+    date,
+    retunmark,
+    retundate
   }
 
 
@@ -34,11 +40,23 @@ function Form() {
 
   axios.post("/post",data).then((responces)=>{
 
-    alert(responces.data)
+    if(responces){
 
-    navigate("/")
+      navigate("/")
+     
+      message.success("data added sucssfully...!")
+
+    }else{
 
 
+      message.error("something worng...! data adding failed")
+
+
+
+    }
+
+    
+   
 
  
   })
@@ -115,6 +133,8 @@ function Form() {
             <input type='text' name='defectpart' placeholder='Defect part' required="true" onChange={(e)=>{setdefectpart(e.target.value)}} /><br/><br/>
 
             <input type='date' name='date' placeholder='enter date' required="true" onChange={(e)=>{setdate(e.target.value)}} /><br/><br/>
+
+           
 
                 
                

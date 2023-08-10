@@ -3,6 +3,7 @@
 
 const mongoose=require("mongoose")
 const bcrypt=require('bcrypt')
+const { now } = require("mongoose")
 
 const adddataschema=new mongoose.Schema({
 
@@ -11,7 +12,9 @@ const adddataschema=new mongoose.Schema({
     brand:String,
     product:String,
     defectpart:String,
-    date:String
+    date:String,
+    retunmark:Boolean,
+    retundate:String
 
 
 })
@@ -44,14 +47,16 @@ module.exports.dataadd=(data)=>{
            const final=new dbadd(data)
 
            final.save().then((responce)=>{
+            
+            resolve({flag:true})
 
-            resolve(responce)
+           
            
         }).catch(err=>{
 
-            reject(err)
+          resolve({flag:false})
 
-           })
+        })
 
 
 
@@ -226,6 +231,57 @@ module.exports.viewcat1=()=>{
 
 
         })
+
+
+
+     }
+
+
+     module.exports.retunmark=(id)=>{
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var mes = today.getMonth()+1;
+        var dia = today.getDate();
+        
+        var date_res =mes+"-"+dia+"-"+year;
+      
+
+        
+        
+        
+        
+        return new Promise(async (resolve,reject)=>{
+
+            const fetchdb= mongoose.model("data",adddataschema)
+
+
+       const respo= await fetchdb.updateOne({_id:id},{$set:{retunmark:true, retundate:date_res}})
+
+                if(respo){
+
+                    resolve({flag:true})
+
+                }else{
+
+                  resolve({flag:false})
+
+                }
+
+
+
+            
+
+
+
+
+
+
+
+
+        })
+
+       
 
 
 

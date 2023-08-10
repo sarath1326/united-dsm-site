@@ -119,3 +119,75 @@ h6{
     color: rgb(250, 110, 110);
 }
 
+
+
+
+
+.alert-box{
+
+ width: 400px;
+ height: 300px;
+ background-color: white;
+ position: absolute;
+ top: 200px;
+right: 40%;
+border: 2px solid silver ;
+border-radius: 20px;
+
+
+
+}
+
+
+.icon-alert-main{
+    height: 100px;
+    width: 100%;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.waring-icon{
+     
+    color: orange;
+    font-size: 50px;
+
+
+}
+
+.btngroup{
+
+    margin-top: 55px;
+}
+
+
+.btn-back{
+
+    margin-left: 70px;
+    margin-right: 40px;
+    background-color: red;
+    color: white;
+    border: none;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.btn-conf{
+
+    background-color: green;
+    color: white;
+    border: none;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+
+}
+
+
+.tick-mark{
+    
+}
