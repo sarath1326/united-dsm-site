@@ -5,6 +5,7 @@ const express=require("express")
 const router=express.Router()
 const db=require("../Database/dbtransfer")
 const loginmail=require("../Email/Loginmail")
+const method=require("../Methods/deleteMethod")
 
 const jwt =require("jsonwebtoken")
 
@@ -254,6 +255,56 @@ router.get("/username/navbar",(req,res)=>{
         })
 
 
+
+
+
+    })
+
+
+
+    router.delete("/delete",(req,res)=>{
+
+        const {id,retundate}=req.body
+
+       
+
+              
+      method.data_delete(retundate).then((respo)=>{
+
+        if(respo.redate){
+
+            res.json({noretdate:true})
+
+        }else if(respo.flag){
+
+            db.delete_data(id).then((result)=>{
+
+                if(result){
+
+                    res.json({flag:true})
+        
+                }else{
+
+                    res.sendStatus(500)
+                }
+
+              })
+
+           
+        }else{
+
+            res.json({flag:false})
+        }
+
+
+
+
+
+      })
+
+
+
+        
 
 
 

@@ -267,25 +267,41 @@ module.exports.viewcat1=()=>{
                   resolve({flag:false})
 
                 }
+            })
 
-
-
-            
-
-
-
+        }
 
 
 
 
-
-        })
-
-       
+        module.exports.delete_data=(id)=>{
 
 
+            return new Promise((resolve,reject)=>{
 
-     }
+
+                const fetchdb= mongoose.model("data",adddataschema)
+
+                fetchdb.deleteOne({_id:id}).then((respo)=>{
+
+                    if(respo){
+
+                        resolve({datadelet:true})
+                    
+                    }else{
+                        resolve({datadelet:false})
+
+                    }
 
 
-  
+
+
+
+                })
+
+
+            })
+
+                
+
+        }
