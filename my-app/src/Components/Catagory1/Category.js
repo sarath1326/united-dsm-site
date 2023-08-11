@@ -15,21 +15,21 @@ import { useNavigate } from 'react-router-dom';
 import { GiCheckMark } from "react-icons/gi";
 import {message } from "antd" 
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import ReactPaginate from "react-paginate"
 import { BiSolidErrorAlt } from "react-icons/bi"; 
 
 
-axios.defaults.withCredentials=true
+axios.defaults.withCredentials=true;
 
 function Category() {
   
-  const [filterbox,setfilterbox]=useState(false)
-  const [fetchdata,setfetchdata]=useState([])
-  const [fillterdata,setfillterdata]=useState([])
-  const [alert,setalert]=useState(false)
-  const [dataid,setdataid]=useState("")
-  const [check,setcheck]=useState(false)
-  const [indexvalue,setindexvalue]=useState("")
+  const [filterbox,setfilterbox]=useState(false);
+  const [fetchdata,setfetchdata]=useState([]);
+  const [fillterdata,setfillterdata]=useState([]);
+  const [alert,setalert]=useState(false);
+  const [dataid,setdataid]=useState("");
+  const [check,setcheck]=useState(false);
+  const [indexvalue,setindexvalue]=useState("");
 
   const navigate=useNavigate();
 
@@ -47,87 +47,84 @@ function Category() {
 
       }).then((result)=>{
 
-        const fetchdata=result.data
+        const fetchdata=result.data 
 
-        console.log("fetchdata",fetchdata)
+        console.log("fetchdata",fetchdata);
 
 
         if(fetchdata.faildauth){
 
-          navigate("/login")   
+          navigate("/login") ; 
         
         
         }else if(fetchdata.details.flag){
 
            const result=fetchdata.details
          
-         
-            setfetchdata(result.data,{partretun:false});
+           setfetchdata(result.data,{partretun:false});
           
           setfillterdata(result.data);
 
+            } else {
 
-           } else {
-
-           
-            navigate("/")
+           navigate("/");
           
           }
 
 
          });
 
-      
+       }, [] );
 
-    }, [] );
+
+                         //search option code start  //
 
 
     function search(value){
       
-      console.log(value)
+      console.log(value);
 
-      const res=fillterdata.filter(obj=>obj.cuname.toLowerCase().includes(value) || obj.mobile.includes(value)   )
+      const res=fillterdata.filter(obj=>obj.cuname.toLowerCase().includes(value) || obj.mobile.includes(value));
 
-      
-
-      setfetchdata(res)
+      setfetchdata(res);
      
-      // console.log(res);
-
     }
 
-    console.log(fetchdata);
+       //search option code end //
 
 
-    function return_marking(id,index){
+       //defect part return marking code starting  //
 
-      setalert(true)
-      setdataid(id)
-      setindexvalue(index)
+
+     function return_marking(id,index){
+
+      setalert(true);
+      setdataid(id);
+      setindexvalue(index);
 
      }
 
      function sendapi(){
-
-      const id=dataid
-      const index=indexvalue
+        
+      const id=dataid;
+      const index=indexvalue;
 
        axios("/partsend?id="+id).then((respo)=>{
 
           if(respo){
 
-            setcheck(true)
-            setalert(false)
+            setcheck(true);
+            setalert(false);
 
             fetchdata[index].retunmark = true 
             
-            message.success("Part retun marking Sucssfully...!")
+            message.success("Part retun marking Sucssfully...!");
 
              }else{
 
-            setcheck(false)
-            setalert(false)
-            message.success("Part retun marking Failed...!")
+            setcheck(false);
+            setalert(false);
+            message.success("Part retun marking Failed...!");
 
            }  
           
@@ -136,65 +133,94 @@ function Category() {
         }
 
 
-     function deletepart(id,index,retundate){
+        // defect part return marking code end // 
 
-      
-      axios.delete("/delete",{data:{id:id,retundate:retundate}}).then((respo)=>{
+       
+        //defect part data delet code start //
+     
+     
+        function deletepart(id,index,retundate){
 
-      
-                  if(respo.data.noretdate){
+          axios.delete("/delete",{data:{id:id,retundate:retundate}}).then((respo)=>{
 
-                    message.error("this part not retune")
+             if(respo.data.noretdate){
+           
+              message.error("this part not retune");
                      return
 
                   }else if(respo.data.flag){
 
-
-                    fetchdata.splice(index,1) 
-            
-            
-               setfetchdata([...fetchdata])
+                  fetchdata.splice(index,1); 
+                
+                  setfetchdata([...fetchdata]);
           
-                message.success("data deleted")
+                message.success("data deleted");
                  
               }else{
 
-                    message.error("this part delete after 7 days")
+                    message.error("this part delete after 7 days");
 
-                  }
+                  };
 
-                })
+                });
 
-              }
+              };
 
-    
-     
-    
-    
-    
-    
+              //defect part data delet code end //
 
 
+              //pagination code start//
 
-   
+           const [pageNumber,setPageNumber]=useState(0);
+
+             const userPrePage=2;
+           const pageVisited=pageNumber*userPrePage ;
+
+           const pageCount=Math.ceil(fetchdata.length / userPrePage);
+
+           const changePage = ({selected})=>{
+
+            setPageNumber(selected);
+
+           }
+
+           const displyaData=fetchdata.slice(pageVisited, pageVisited+userPrePage)
+           .map((obj,index)=>
+           
+           (
+             <tr>
+            {/* <td>{index+1}</td>   */}
+           <td>{obj.cuname}</td>
+           <td> {obj.mobile}</td>
+           <td> {obj.brand}</td>
+           <td>{obj.product}</td>
+           <td>{obj.defectpart}</td>
+           <td> {obj.date}</td>
+           
+          <td>   { obj.retunmark ? <>   <GiCheckMark className='tick-mark' />  <span>{obj.retundate}</span>  </>
+
+          : <BsSend className='tick-mark' onClick={()=>{return_marking(obj._id,index)}} /> }  </td>
+          
+          <td id='icon' onClick={()=>{deletepart(obj._id,index,obj.retundate) }}    > <BsTrash3Fill/> </td>
+         
+             </tr>
+             
+
+            )) 
+
+            //pagination code end //
 
 
-    
-    
-  return (
+
+     return (
     
     <div  >
 
       <Navebar/>
 
-
-
-
-      <div className='main'>
+       <div className='main'>
 
         <div className='   box'> 
-
-        
 
         <h1>LLoyd </h1>
 
@@ -227,7 +253,7 @@ function Category() {
             <thead>
                 <tr>
 
-                    <th> no</th>
+                    {/* <th> no</th> */}
                     <th>customer name</th>
                     <th> mobile no</th>
                     <th>brand  </th>
@@ -245,61 +271,35 @@ function Category() {
 
                </thead>
                <tbody>
-                
-          {
-
-            fetchdata.map((obj,index)=>
-
-            (
-
-
-              <tr>
-                     <th>{index+1}</th>  
-                    <td>{obj.cuname}</td>
-                    <td> {obj.mobile}</td>
-                    <td> {obj.brand}</td>
-                    <td>{obj.product}</td>
-                    <td>{obj.defectpart}</td>
-                    <td> {obj.date}</td>
-                    
-                   <td>   { obj.retunmark ? <>   <GiCheckMark className='tick-mark' />  <span>{obj.retundate}</span>  </>
-
-                   
-                   : <BsSend className='tick-mark' onClick={()=>{return_marking(obj._id,index)}} /> }  </td>
-                   
-                    
-                    
-                    
-                    
-                    <td id='icon' onClick={()=>{deletepart(obj._id,index,obj.retundate) }}    > <BsTrash3Fill/> </td>
-                  
-                      </tr>
-                      
-
-
-
-
-
-            )
-
-          )
-
-
-          
 
 
                 
-
-          } 
+              { displyaData     } 
                       
-                      
+                    
                       
                       </tbody>
 
                       </Table>
 
+                     <ReactPaginate 
 
-            {   
+                     previousLabel={"previous"}
+
+                     nextLabel={"next"}
+
+                     pageCount={pageCount}
+
+                     onPageChange={changePage}
+
+                     containerClassName={"paginationBttns"}
+                     pageLinkClassName={"previousBttn"}
+                     nextLinkClassName={"nextBttn"}
+                     disabledClassName={"paginationDisabled"}
+                     activeClassName={"paginationActive"}
+                      />
+                      
+                       {   //this is a aert box. press delete icon this box show on //
             
             alert &&
 
@@ -329,108 +329,11 @@ function Category() {
  
 
 
-          
-
-
-
-
-
-
-
-
-
-
-      </div>
+   </div>
        
 
-        
-
-       
-
-        
-        
-        
-        {/* <div  className=''>
-
-
-        <Table striped bordered hover className='container'>
-
-            <thead>
-                <tr>
-
-                    <th> no</th>
-                    <th>customer name</th>
-                    <th> mobile no</th>
-                    <th>brand  </th>
-                    <th>product</th>
-                    <th> defect part</th>
-                    <th> enter date</th>
-                    <th> return marking</th>
-                    <th> Delete</th>
-
-
-
-                    
-                    
-                    </tr>
-
-               </thead>
-               <tbody>
-
-                <tr>
-                     <th> 1</th>  
-                    <td>sarath</td>
-                    <td> 7592831937</td>
-                    <td> lloyd</td>
-                    <td>ac</td>
-                    <td>coil</td>
-                    <td> 20/5/23</td>
-                    <td> <input type='checkbox'/></td>
-                    <td id='icon'> <BsTrash3Fill/> </td>
-                      </tr>
-
-                      
-                      
-                      
-                      
-                      </tbody>
-
-                      </Table>
-
-
-
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
+  </div>
+  
   )
 }
 
