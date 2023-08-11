@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Route,Routes} from "react-router-dom"
 import Home from './Components/Home'
 import Category from './Components/Catagory1/Category';
-import Category2 from './Components/Category2';
+import Category2 from './Components/Catagory2/Category2';
 import Category3 from './Components/Category3';
 import Form from './Components/Form';
 import Login from './Components/Login';

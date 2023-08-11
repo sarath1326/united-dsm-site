@@ -21,6 +21,11 @@ function cat1(){
 }
 
 function cat2(){
+
+
+  
+  
+
   
   navigate("/cat2")
 

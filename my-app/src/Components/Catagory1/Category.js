@@ -19,6 +19,7 @@ import ReactPaginate from "react-paginate"
 import { BiSolidErrorAlt } from "react-icons/bi"; 
 
 
+
 axios.defaults.withCredentials=true;
 
 function Category() {
@@ -33,6 +34,10 @@ function Category() {
 
   const navigate=useNavigate();
 
+  
+ 
+
+  
      
     useEffect(()=>{
 
