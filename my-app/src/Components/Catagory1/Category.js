@@ -17,12 +17,15 @@ import {message } from "antd"
 import Dropdown from 'react-bootstrap/Dropdown';
 import ReactPaginate from "react-paginate"
 import { BiSolidErrorAlt } from "react-icons/bi"; 
+import { useParams } from 'react-router-dom';
 
 
 
 axios.defaults.withCredentials=true;
 
 function Category() {
+
+ const {url}=useParams()
   
   const [filterbox,setfilterbox]=useState(false);
   const [fetchdata,setfetchdata]=useState([]);
@@ -31,17 +34,26 @@ function Category() {
   const [dataid,setdataid]=useState("");
   const [check,setcheck]=useState(false);
   const [indexvalue,setindexvalue]=useState("");
+  const [title,settitle]=useState('')
+  const [cat1_filter,setcat1_fillter]=useState(false)
+  const [cat2_filter,setcat2_fillter]=useState(false)
+  const [cat3_filter,setcat3_fillter]=useState(false)
+  const [filteropt,setfilteropt]=useState("All")
 
   const navigate=useNavigate();
 
-  
+ 
  
 
   
      
     useEffect(()=>{
 
-      axios("/view/cat1",{
+      console.log(url)
+
+     
+
+      axios(`/view/${url}`,{
 
         headers:{
 
@@ -52,34 +64,68 @@ function Category() {
 
       }).then((result)=>{
 
-        const fetchdata=result.data 
+        const fetchrespo=result.data 
 
-        console.log("fetchdata",fetchdata);
+        console.log("fetchdata",fetchrespo);
 
 
-        if(fetchdata.faildauth){
+        if(fetchrespo.faildauth){
 
           navigate("/login") ; 
         
         
-        }else if(fetchdata.details.flag){
+        }else if(fetchrespo.details.flag){
 
-           const result=fetchdata.details
+           const result=fetchrespo.details
          
            setfetchdata(result.data,{partretun:false});
           
           setfillterdata(result.data);
+          settitle(fetchrespo.title)
+         
+          //this else if is helping change fillter option //
 
-            } else {
+          if(fetchrespo.cat3fill){
+
+            setcat3_fillter(true);
+            
+           }
+           
+          else if(fetchrespo.cat1fill){
+  
+            setcat1_fillter(true);
+  
+          }
+           
+          else{
+  
+            setcat2_fillter(true);
+  
+               }
+  
+        //this else if is helping change fillter option (end)   //
+
+
+         } else {
 
            navigate("/");
           
           }
 
 
+
+
          });
 
+
+         
+
+
+
+
        }, [] );
+
+       
 
 
                          //search option code start  //
@@ -97,8 +143,37 @@ function Category() {
 
        //search option code end //
 
+       //filter option code start//
 
-       //defect part return marking code starting  //
+       function fillter(value){
+
+        if(value=="all"){
+          
+          console.log("all");
+          setfetchdata(fillterdata);
+          
+          setfilteropt("all");
+
+        }else{
+
+        const res= fillterdata.filter(obj=>obj.brand.toLowerCase().includes(value));
+
+           if(res){
+        
+            setfetchdata(res);
+
+            setfilteropt(value)
+          
+           };
+
+          };
+         };
+
+   
+          //filter option code end//
+
+
+          //defect part return marking code starting  //
 
 
      function return_marking(id,index){
@@ -227,7 +302,7 @@ function Category() {
 
         <div className='   box'> 
 
-        <h1>LLoyd </h1>
+        <h1>{title} </h1>
 
 
         <div className='input-div'>   
@@ -241,9 +316,68 @@ function Category() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='drop-menu'>
-        <Dropdown.Item href="#/action-1">All</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">LLoyd</Dropdown.Item>
+
+     
+        {
+         
+       
+        cat3_filter?
+         
+         <>
+          <Dropdown.Item onClick={()=>{fillter("all")}} >All</Dropdown.Item>
+
+          <Dropdown.Item onClick={()=>{fillter("akiva")}} > Akiva </Dropdown.Item>
+          
+          <Dropdown.Item onClick={()=>{fillter("amstard")}} >Amstard</Dropdown.Item>
+          
+          <Dropdown.Item onClick={()=>{fillter("onida")}}>Onida</Dropdown.Item>
+
+          </>
+          
+         :null
+
+       
+
+        }
+
+     
+
+
+       {
+       
+       cat1_filter ?
+         <>
+         
+        <Dropdown.Item onClick={()=>{fillter("all")}} >All</Dropdown.Item>
+         
+         <Dropdown.Item onClick={()=>{fillter("lloyd")}} >LLoyd</Dropdown.Item>
+         
+        </>
+        :null
+
+       }
+
+
+     {
+       
+       cat2_filter ?
+         <>
+
+        <Dropdown.Item onClick={()=>{fillter("all")}} >All</Dropdown.Item>
+         
+         <Dropdown.Item onClick={()=>{fillter("blueberry")}} >blueberry</Dropdown.Item>
+         
+         <Dropdown.Item onClick={()=>{fillter("carrier")}} >carrier</Dropdown.Item>
+         
+         
+         </>
+        :null
+
+       }
         
+      
+      
+      
       </Dropdown.Menu>
     </Dropdown>
 

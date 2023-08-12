@@ -20,7 +20,7 @@
                   }else{
             
             
-                    const repartdate="08/1/2023"
+                    const repartdate=retundate
             
                    
             

@@ -102,7 +102,7 @@ router.get("/view/cat1",verifyauth,(req,res)=>{
 
     db.viewcat1().then((respo)=>{
 
-        res.json({details:respo,faildauth:false})
+        res.json({details:respo,faildauth:false,title:"LLoyd",cat1fill:true})
 
         
 
@@ -119,7 +119,7 @@ router.get("/view/cat2",verifyauth,(req,res)=>{
 
     db.viewcat2().then((respo)=>{
 
-        res.json({details:respo,faildauth:false})
+        res.json({details:respo,faildauth:false,title:"blueberry,carrier",cat2fill:true})
 
     })
 
@@ -132,9 +132,11 @@ router.get("/view/cat2",verifyauth,(req,res)=>{
 
 router.get("/view/cat3",verifyauth,(req,res)=>{
 
+   
+
     db.viewcat3().then((respo)=>{
 
-        res.json({details:respo,faildauth:false})
+        res.json({details:respo,faildauth:false,title:"Akiva,Amstard,Onida",cat3fill:true})
 
 
         

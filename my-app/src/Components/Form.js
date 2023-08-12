@@ -86,7 +86,7 @@ function Form() {
 
               <form>
 
-            <input type='text' name='cuname' placeholder='coustmoer name' required="true" onChange={(e)=>{setcuname(e.target.value)}}/><br /><br/>
+            <input type='text' name='cuname' placeholder='coustmoer name' required="true" onChange={(e)=>{setcuname(e.target.value)}}/><br/><br/>
 
             <input type='text' name='mobile' placeholder='mobile no' required="true" onChange={(e)=>{setmobile(e.target.value)}} /><br/><br/>
 
@@ -100,7 +100,7 @@ function Form() {
               <option value={"amstard"} />
               <option value={"carrier"} />
               <option value={"onida"} />
-              <option value={"other"} />
+              <option value={"Akiva"} />
 
 
 

@@ -145,7 +145,7 @@ module.exports.viewcat1=()=>{
 
             const fetchdb= mongoose.model("data",adddataschema)
 
-            const result= await fetchdb.find({brand:{$in:["amstard","onida","other"]}})
+            const result= await fetchdb.find({brand:{$in:["amstard","onida","Akiva"]}})
 
                 console.log(result)
             

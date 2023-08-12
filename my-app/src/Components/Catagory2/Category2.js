@@ -25,28 +25,21 @@ axios.defaults.withCredentials=true;
 
 function Category2() {
 
-    const [filterbox,setfilterbox]=useState(false)
-    const [filteropt,setfilteropt]=useState("all")
-    const [fetchdata,setfetchdata]=useState([])
-    const [fillterdata,setfillterdata]=useState([])
+    
+    const [filteropt,setfilteropt]=useState("all");
+    const [fetchdata,setfetchdata]=useState([]);
+    const [fillterdata,setfillterdata]=useState([]);
     const [alert,setalert]=useState(false);
    const [dataid,setdataid]=useState("");
    const [check,setcheck]=useState(false);
    const [indexvalue,setindexvalue]=useState("");
+  
 
 
-    const navigate=useNavigate()
+    const navigate=useNavigate();
 
 
-
-     function bb(value){
-
-        setfilteropt(value)
-
-     }
-
-
-     useEffect(()=>{axios("/view/cat2",{
+       useEffect(()=>{axios("/view/cat2",{
 
         headers:{
 
@@ -58,27 +51,27 @@ function Category2() {
 
 
         
-        const fetchdata=result.data
+        // const fetchdata=result.data
 
-        console.log("fetchdata",fetchdata)
+        const resultdata=result.data
+
+       
 
 
-        if(fetchdata.faildauth){
+        if(resultdata.faildauth){
 
-          navigate("/login")   
+          navigate("/login") ;  
         
         
-        }else if(fetchdata.details.flag){
+        }else if(resultdata.details.flag){
 
-           const result=fetchdata.details
+           const result=resultdata.details
          
-         
-            setfetchdata(result.data);
+           setfetchdata(result.data);
           
-          setfillterdata(result.data);
-
-
-           } else {
+            setfillterdata(result.data);
+          
+             } else {
 
            
             navigate("/")
@@ -88,14 +81,7 @@ function Category2() {
 
          });
 
-        
-
-
-
-
-
-
-     },[])
+        },[])
 
      //search methode start //
 
@@ -110,8 +96,34 @@ function Category2() {
 
      //search method end //
 
+     //filter method starting //
 
-       
+
+       function fillter(value){
+
+        if(value=="all"){
+          
+          console.log("all");
+          setfetchdata(fillterdata);
+          
+          setfilteropt("all");
+
+        }else{
+
+        const res= fillterdata.filter(obj=>obj.brand.toLowerCase().includes(value));
+
+           if(res){
+        
+            setfetchdata(res);
+
+            setfilteropt(value)
+          
+           };
+
+          };
+         };
+
+         //fillter method end
 
 
 
@@ -237,19 +249,13 @@ function Category2() {
   
   
   
-
-
-
-
-
-
-
-
-
-
+  
+  
+  
   
     return (
-    <div>
+   
+   <div>
 
 
 
@@ -275,12 +281,16 @@ function Category2() {
     
     <Dropdown>
       <Dropdown.Toggle variant='none' id="dropdown-basic" className='drop-btn'>
-       <FiFilter className='span' />
+      <FiFilter className='span' />  <span>{filteropt}</span> 
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='drop-menu'>
-        <Dropdown.Item href="#/action-1">blueberry</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">carrier</Dropdown.Item>
+
+      <Dropdown.Item onClick={()=>{fillter("all")}}>All</Dropdown.Item>
+       
+        <Dropdown.Item onClick={()=>{fillter("blueberry")}}>blueberry</Dropdown.Item>
+       
+        <Dropdown.Item onClick={()=>{fillter("carrier")}}>carrier</Dropdown.Item>
         
       </Dropdown.Menu>
     </Dropdown>
@@ -372,37 +382,11 @@ function Category2() {
  
 
 
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
 </div>
  
-
-
-
-
-
-
-      
-    
-    
-    
-    
-    
-    </div>
+ 
+ 
+ </div>
   )
 }
 

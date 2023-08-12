@@ -9,7 +9,7 @@ import {BrowserRouter as Router,Route,Routes} from "react-router-dom"
 import Home from './Components/Home'
 import Category from './Components/Catagory1/Category';
 import Category2 from './Components/Catagory2/Category2';
-import Category3 from './Components/Category3';
+import Category3 from './Components/Catagory3/Category3';
 import Form from './Components/Form';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
@@ -31,11 +31,11 @@ function App() {
 
       <Route element={<Home/>} path='/' />
 
-      <Route element={<Category/>} path='/cat' />
+      <Route element={<Category/>} path='/cat/:url' />
 
-      <Route element={<Category2 />} path='/cat2' />
+      {/* <Route element={<Category2 />} path='/cat2' />
 
-      <Route element={<Category3 />} path='/cat3' />
+      <Route element={<Category3 />} path='/cat3' /> */}
 
       <Route element={ <Form />} path='/form'   />
 

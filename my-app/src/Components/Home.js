@@ -16,33 +16,26 @@ const navigate=useNavigate()
 
 function cat1(){
   
-  navigate("/cat")
+  const url="cat1"
+ 
+  navigate(`/cat/${url}`);
 
 }
 
 function cat2(){
 
+  const url="cat2"
 
-  
-  
-
-  
-  navigate("/cat2")
-
+navigate(`/cat/${url}`);
 
 }
 
 
 function cat3(){
 
- navigate("/cat3")
-
-}
-
-function form(){
+  const url="cat3"
  
-   navigate("/form")
-
+  navigate(`/cat/${url}`);
 }
 
 
@@ -100,7 +93,7 @@ function form(){
         </Table>
 
 
-        <button onClick={form}    className='btn-home'> add new defect part</button>
+        <button onClick={()=>{navigate("/form")}}    className='btn-home'> add new defect part</button>
 
 
 
