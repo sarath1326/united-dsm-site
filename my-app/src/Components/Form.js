@@ -86,11 +86,11 @@ function Form() {
 
               <form>
 
-            <input type='text' name='cuname' placeholder='coustmoer name' required="true" onChange={(e)=>{setcuname(e.target.value)}}/><br/><br/>
+            <input className='input' type='text' name='cuname' placeholder='coustmoer name' required="true" onChange={(e)=>{setcuname(e.target.value)}}/>
 
-            <input type='text' name='mobile' placeholder='mobile no' required="true" onChange={(e)=>{setmobile(e.target.value)}} /><br/><br/>
+            <input className='input' type='text' name='mobile' placeholder='mobile no' required="true" onChange={(e)=>{setmobile(e.target.value)}} />
 
-            <input list='branddata' name='barnd' placeholder='barnd' required="true" onChange={(e)=>{setbrand(e.target.value)}}  /><br/><br/>
+            <input className='input' list='branddata' name='barnd' placeholder='barnd' required="true" onChange={(e)=>{setbrand(e.target.value)}}  />
             
 
             <datalist id='branddata'>
@@ -112,7 +112,7 @@ function Form() {
 
 
 
-            <input list='prodata' name='product' placeholder='product' required="true" onChange={(e)=>{setproduct(e.target.value)}} /><br/><br/>
+            <input className='input' list='prodata' name='product' placeholder='product' required="true" onChange={(e)=>{setproduct(e.target.value)}} />
 
                      <datalist id='prodata'>
 
@@ -130,9 +130,10 @@ function Form() {
             
             
             
-            <input type='text' name='defectpart' placeholder='Defect part' required="true" onChange={(e)=>{setdefectpart(e.target.value)}} /><br/><br/>
+            <input className='input' type='text' name='defectpart' placeholder='Defect part' required="true" onChange={(e)=>{setdefectpart(e.target.value)}} />
 
-            <input type='date' name='date' placeholder='enter date' required="true" onChange={(e)=>{setdate(e.target.value)}} /><br/><br/>
+           
+            <input className='input' type='date' name='date' placeholder='enter date' required="true" onChange={(e)=>{setdate(e.target.value)}} />
 
            
 

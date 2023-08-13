@@ -4,9 +4,13 @@ import React from 'react'
 import "./Signup.css"
 import { useState } from 'react'
 import axios from "../constant/Axios"
+import { useNavigate } from 'react-router-dom'
+import {message } from "antd" 
 
 function Signup() {
-
+     
+  const navigate=useNavigate()
+  
   const [name,setname]=useState('');
   const [mobile,setmobile]=useState('');
   const [username,setusername]=useState('');
@@ -24,6 +28,17 @@ function Signup() {
   function signup(){
 
     axios.post("/signup",data).then((respo)=>{
+
+      if(respo.data.signup){
+
+        navigate("/otp")
+      
+      }else{
+
+        navigate("/sig")
+        message.error("this email id alrady exsist...! plz try another one")
+      
+      }
 
       
 

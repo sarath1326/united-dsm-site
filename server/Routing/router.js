@@ -6,6 +6,7 @@ const router=express.Router()
 const db=require("../Database/dbtransfer")
 const loginmail=require("../Email/Loginmail")
 const method=require("../Methods/deleteMethod")
+const emailvarification = require("../otpVarification/verification")
 
 const jwt =require("jsonwebtoken")
 
@@ -149,17 +150,83 @@ router.get("/view/cat3",verifyauth,(req,res)=>{
 
 router.post("/signup",(req,res)=>{
 
-   db.signup(req.body).then((result)=>{
 
-   
-    res.json(result)
+
+    const email= req.body.username
+
+      db.emailexist(email).then((respo)=>{   //this function chack user enter email allready exist 
+
+            
+            if(respo.exist){
+
+                res.json({signup:false})
+
+            }else{
+
+                console.log("hiiii")
+
+                emailvarification.otp(req.body).then((respo)=>{  // this function use, user enter new email then sent otp for email varification 
+
+                    if(respo.flag){
+
+                        res.json({signup:true})    //sent this responces client side show otp enter page 
+                   
+                    }else{
+
+                        res.json({signup:false})    
+
+                    }
+
+                })
+
+             }
+
+         })  
+
+})
+
+
+
+
+
+
+
+
+
+
+      router.post("/otpverifi",(req,res)=>{
+
+        const data=req.body
+
+         db.match_otp(data.otp).then((respo)=>{
+
+            if(respo.flag){
+
+                res.json({varifi:true})
+
+            }else{
+
+                res.json({varifi:false})
+            }
+
+         }).catch(err=>{
+            
+            res.sendStatus(500)
+         
+        }) 
+
 
   
-})
+     })  
+ 
 
 
 
-})
+
+
+
+
+
 
 
 router.post("/login",(req,res)=>{
@@ -316,8 +383,7 @@ router.get("/username/navbar",(req,res)=>{
 
 
    
-
-
+        
 
 
 

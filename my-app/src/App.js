@@ -8,11 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Route,Routes} from "react-router-dom"
 import Home from './Components/Home'
 import Category from './Components/Catagory1/Category';
-import Category2 from './Components/Catagory2/Category2';
-import Category3 from './Components/Catagory3/Category3';
+// import Category2 from './Components/Catagory2/Category2';
+// import Category3 from './Components/Catagory3/Category3';
 import Form from './Components/Form';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
+import Otp_enter from './Components/Otp_enter';
 
 
 
@@ -33,15 +34,13 @@ function App() {
 
       <Route element={<Category/>} path='/cat/:url' />
 
-      {/* <Route element={<Category2 />} path='/cat2' />
-
-      <Route element={<Category3 />} path='/cat3' /> */}
-
       <Route element={ <Form />} path='/form'   />
 
       <Route  element={ <Login />} path='/login'/>
 
       <Route  element={<Signup />} path='/sig' />
+
+      <Route element={<Otp_enter />} path='/otp' />
 
       </Routes>
 
