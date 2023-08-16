@@ -6,9 +6,70 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    background-color: rgb(37, 43, 72);
+    
+   
 }
 
 .btn-sig{
-    margin-left: 60px;
+    margin-left:70px;
+    width: 200px;
+    height: 50px;
+    background-color: rgb(53, 21, 93);
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
 }
+
+
+.form-box-sig{
+
+   width: 500px;
+   height: 550px;
+  background-color: rgb(238, 237, 237);
+  border: 2px solid silver;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+
+
+}
+
+.form-sig{
+    margin-top: 80px;
+}
+
+ .input-sig{
+
+    width: 350px;
+    height: 35px;
+    background-color:rgb(133, 230, 197);
+    border: none;
+   
+}
+
+.p-sig{
+    margin-top: 0;
+    font-size: 25px;
+    
+}
+
+ .input-sig:invalid~.errspan-sig{
+    display: block;
+    
+  }
+   
+
+  .errspan-sig{
+    display: none;
+  }
+   
+
+  .errspan-sig{
+
+    margin: 0;
+    color: red;
+} 

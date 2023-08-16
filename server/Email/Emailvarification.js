@@ -12,9 +12,9 @@ const mailgen=require ('mailgen')
   
 
 
-  module.exports.varifi_mail=(otp)=>{
+  module.exports.varifi_mail=(data)=>{
 
-
+              console.log(data)
 
             return new Promise((resolve,reject)=>{
 
@@ -46,8 +46,8 @@ const mailgen=require ('mailgen')
     
                 let responces={
                     body:{
-                        name:"sarath pm",
-                        intro: `ypoe email varification code is ${otp}`
+                        name:`${data.user.name}`,
+                        intro: `your email varification code is ${data.sendotp}`
     
                     }
                 }
@@ -58,7 +58,7 @@ const mailgen=require ('mailgen')
                 let message={
     
                     from:"sarathsarath93366@gmail.com",
-                    to:"sarathsarath93366@gmail.com",
+                    to:`${data.user.email}`,
                     subject:"email verification",
                     html:mail
                 };

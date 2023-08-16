@@ -26,7 +26,9 @@ function Login() {
   }
 
 
-   function login(){
+   function login(e){
+
+    e.preventDefault();
 
        axios.post("/login",data).then((result)=>{
 
@@ -76,12 +78,13 @@ function Login() {
 
                 <h2> Login </h2>
 
-                <form className='form-login'>
+                <form className='form-login' onSubmit={login}>
 
 
                     
                     <input type='text' name='username' placeholder="username"
                      
+                     required={true}
                      value={username}
                     onChange={(e)=>{setusername(e.target.value)}} 
                     
@@ -95,6 +98,8 @@ function Login() {
                     
                     
                     <input type='password' name='password' placeholder='password' 
+                    
+                    required={true}
                     value={password} 
                     onChange={(e)=>{setpassword(e.target.value)}} 
                     
@@ -108,12 +113,12 @@ function Login() {
 
                     
                     
-                   
+                    <button className='btn-login'   > Login</button><br/>
+
                  
                   </form>
 
-                  <button className='btn-login' onClick={login}   > Login</button><br/>
-
+                 
                   <a className='a'> change your password ? </a>
 
 

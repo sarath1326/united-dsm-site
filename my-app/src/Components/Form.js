@@ -6,25 +6,36 @@ import "./Form.css"
 import { useState } from 'react'
 import axios from "../constant/Axios"
 import { useNavigate } from 'react-router-dom'
-import {message } from "antd" 
+import { message } from "antd"
 
 
 function Form() {
-  
 
-  const [cuname,setcuname]=useState("")
-  const [mobile,setmobile]=useState("")
-  const [brand,setbrand]=useState("")
-  const [product,setproduct]=useState("")
-  const [defectpart,setdefectpart]=useState("")
-  const [date,setdate]=useState("")
-  const [retunmark,setretunmark]=useState(false)
-  const [retundate,setretundate]=useState("")
- 
 
-  const navigate=useNavigate()
+  const [cuname, setcuname] = useState("");
+  const [mobile, setmobile] = useState("");
+  const [brand, setbrand] = useState("");
+  const [product, setproduct] = useState("");
+  const [defectpart, setdefectpart] = useState("");
+  const [date, setdate] = useState("");
+  const [retunmark, setretunmark] = useState(false);
+  const [retundate, setretundate] = useState("");
 
-  const data={
+  const [nameV, setnameV] = useState(false)
+  const [mobileV, setmobileV] = useState(false)
+  const [brandV,setbrandV]=useState(false)
+  const [productV,setproductV]=useState(false)
+  const [defectV,setdefectV]=useState(false)
+  const [dateV,setdateV]=useState(false)
+
+
+
+
+
+
+  const navigate = useNavigate();
+
+  const data = {
     cuname,
     mobile,
     brand,
@@ -36,134 +47,223 @@ function Form() {
   }
 
 
- function addData(){
+  function addData(e) {
 
-  axios.post("/post",data).then((responces)=>{
+    e.preventDefault();
 
-    if(responces){
+    axios.post("/post", data).then((responces) => {
 
-      navigate("/")
-     
-      message.success("data added sucssfully...!")
+      if (responces) {
 
-    }else{
+        navigate("/");
 
+        message.success("data added sucssfully...!");
 
-      message.error("something worng...! data adding failed")
-
+      } else {
 
 
-    }
+        message.error("something worng...! data adding failed");
 
-    
+      };
+
+    });
+
    
 
- 
-  })
-
-    
-
-
-
-
-  }
-
-
+  };
 
 
   return (
     <div>
 
-        <Navebar />
+      <Navebar />
 
-        <div className='form-main'> 
+      <div className='form-main'>
 
-        <div className='form' >
+        <div className='container  form-box'>
 
-            <h4> Enter Data</h4>
+          <h4 className='title-enter'> Enter Data</h4>
 
-            <div className='input-form' >
+          <form onSubmit={addData} >
 
-              <form>
+            <div className='line'>
 
-            <input className='input' type='text' name='cuname' placeholder='coustmoer name' required="true" onChange={(e)=>{setcuname(e.target.value)}}/>
+              <div className='div-box'>
 
-            <input className='input' type='text' name='mobile' placeholder='mobile no' required="true" onChange={(e)=>{setmobile(e.target.value)}} />
-
-            <input className='input' list='branddata' name='barnd' placeholder='barnd' required="true" onChange={(e)=>{setbrand(e.target.value)}}  />
-            
-
-            <datalist id='branddata'>
-
-              <option value={"LLoyd"} />
-              <option value={"blueberry"} />
-              <option value={"amstard"} />
-              <option value={"carrier"} />
-              <option value={"onida"} />
-              <option value={"Akiva"} />
-
-
-
-            </datalist>
-
-
-
-
-
-
-
-            <input className='input' list='prodata' name='product' placeholder='product' required="true" onChange={(e)=>{setproduct(e.target.value)}} />
-
-                     <datalist id='prodata'>
-
-                      <option value={"AC"}   />
-                      <option value={"TV"}   />
-                      <option value={"Wm"}   />
-                      <option value={"gas-other"}   />
-                      
-
-
-
-
-
-                     </datalist>
-            
-            
-            
-            <input className='input' type='text' name='defectpart' placeholder='Defect part' required="true" onChange={(e)=>{setdefectpart(e.target.value)}} />
-
-           
-            <input className='input' type='date' name='date' placeholder='enter date' required="true" onChange={(e)=>{setdate(e.target.value)}} />
-
-           
+                <input className='input-form' type='text' placeholder='enter customer full name' name='cuname' 
+                
+                required
+                pattern='[a-zA-Z].{2,20}'
+                onBlur={()=>{setnameV(true)}}
+                autocomplete="off"
+                onChange={(e)=>{setcuname(e.target.value)}}
 
                 
-               
-               </form>
+                />
 
-               <button className='btn-form' onClick={addData}> submit</button>
-             
+                <br />
+
+               { nameV && <span className='span-form'>*This filed is required & enter more 3 char</span> }
+
+
               </div>
 
+              <div>
+
+                <input className='input-form' type='text' placeholder='enter mobile no' name='mobile'
+                
+                required 
+                pattern='.{10}'
+                onBlur={()=>{setmobileV(true)}}
+                autocomplete="off"
+                onChange={(e)=>{setmobile(e.target.value)}}
+                
+
+                
+                />
+
+                <br />
+
+
+              { mobileV &&  <span className='span-form' >enter valid mobile no</span> }
+
+
+              </div>
+
+            </div>
+
+ 
+
+              {/* second row */}
+
+
+              <div className='line'>
+
+              <div className='div-box'>
+
+                <select className='input-form' type='select' placeholder='enter brand name' name='brand' 
+                
+                required 
+                pattern='[a-zA-Z].{2,20}'
+                onBlur={()=>{setbrandV(true)}}
+                autocomplete="off"
+                onChange={(e)=>{setbrand(e.target.value)}}
+                > <option > Select Brand</option>
+                <option value={"LLoyd"} > LLoyd</option>
+                <option value={"blueberry"}>blueberry</option>
+                <option value={"carrier"}>carrier</option>
+                <option value={"amstard"} > amstard</option>
+                <option value={"onida"}>onida</option>
+                <option  value={"Akiva"}> Akiva</option>
+
+                
+                
+                
+                </select>
+
+                <br />
+
+             { brandV &&   <span className='span-form'>*This filed is required</span> }
+
+
+              </div>
+
+              <div>
+
+                <select className='input-form' type='text' placeholder='enter product name' name='product'
+                required
+                pattern='[a-zA-Z].{1,20}'
+                onBlur={()=>{setproductV(true)}}
+                autocomplete="off"
+                onChange={(e)=>{setproduct(e.target.value)}}
+                > 
+                  <option > Select Product  </option>
+                <option value={"AC"}> AC  </option>
+                <option value={"Wm"}> Wm  </option>
+                <option value={"TV"}> TV  </option>
+                <option value={"REF"}> REF  </option>
+                
+                
+                
+                
+                
+                </select>
+
+
+                <br />
+
+
+                {productV && <span className='span-form' >This field is required</span>}
+
+
+              </div>
+
+            </div>
+
+
+            {/* last row */}
+
+
+
+            <div className='line'>
+
+              <div className='div-box'>
+
+                <input className='input-form' type='text' placeholder='enter defect part' name='defectpart' 
+                required
+                pattern='[a-zA-Z].{2,20}'
+                onBlur={()=>{setdefectV(true)}}
+                autocomplete="off"
+                onChange={(e)=>{setdefectpart(e.target.value)}}
+
+                />
+
+                <br />
+
+               { defectV && <span className='span-form'>*This filed is required</span>}
+
+
+              </div>
+
+              <div>
+
+                <input className='input-form' type='date' placeholder='enter curent Date' name='date'
+
+                required
+                pattern='^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$'
+                onBlur={()=>{setdateV(true)}}
+                onChange={(e)=>{setdate(e.target.value)}}
+
+                
+                />
+
+                <br />
+
+
+                { dateV &&<span className='span-form' >This filed is required</span>}
+
+
+              </div>
+
+            </div>
+
+
+
+        <button className='btn-enter'> Submit</button>
+
+
+
+
+          </form>
+
+
+
+
 
         </div>
 
 
-
-
-
-
-
-
-
-        </div>
-
-
-
-
-
-
-
+      </div>
 
     </div>
   )

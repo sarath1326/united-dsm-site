@@ -63,7 +63,7 @@ const jwt =require("jsonwebtoken")
 
 
 
-router.post("/post",(req,res)=>{
+router.post("/post",(req,res)=>{     //new data ading req //
 
     const data=req.body
 
@@ -73,35 +73,27 @@ router.post("/post",(req,res)=>{
 
             if(respo){
 
-              res.json({flag:true})
+              res.json({flag:true});
 
             }else{
-                res.json({flag:false})
+                res.json({flag:false});
             }
 
         }).catch(err=>{
 
 
-            res.json({flag:false})
+            res.json({flag:false});
 
-        })
+        });
 
+      };
 
-
-
-    }
-
-    
-
-
-})
+    });
 
 
 router.get("/view/cat1",verifyauth,(req,res)=>{
 
-    console.log("hello")
-
-    db.viewcat1().then((respo)=>{
+      db.viewcat1().then((respo)=>{
 
         res.json({details:respo,faildauth:false,title:"LLoyd",cat1fill:true})
 
@@ -160,6 +152,10 @@ router.post("/signup",(req,res)=>{
             if(respo.exist){
 
                 res.json({signup:false})
+               
+                console.log("exist")
+                
+                return
 
             }else{
 

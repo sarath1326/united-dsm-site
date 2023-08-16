@@ -17,6 +17,7 @@ import Otp_enter from './Components/Otp_enter';
 
 
 
+
 function App() {
 
   
@@ -42,6 +43,7 @@ function App() {
 
       <Route element={<Otp_enter />} path='/otp' />
 
+     
       </Routes>
 
       

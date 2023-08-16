@@ -8,14 +8,14 @@ const db=require("./Database/dbconecting")
 
 const cors=require("cors")
 const session=require('express-session');
-const cookiparser=require('cookie-parser')
-const  bodyparser=require("body-parser")
+const cookiparser=require('cookie-parser');
+const  bodyparser=require("body-parser");
 
 
 
 
 
-app.use(express.json())
+app.use(express.json());
 
 app.use( 
     cors({
@@ -23,12 +23,12 @@ app.use(
         methods:["GET","POST","DELETE"],
         credentials:true
     })
-)
+);
 
-app.use(cookiparser())
+app.use(cookiparser());
 
 
-app.use(bodyparser.urlencoded({extended:true}))
+app.use(bodyparser.urlencoded({extended:true}));
 
 
 app.use(
@@ -44,7 +44,7 @@ app.use(
         
 
     })
-)
+);
 
 
 
@@ -52,7 +52,7 @@ app.use(
 
 app.use('/',router);
 
-db.dbconecting()
+db.dbconecting();
 
 
 
@@ -62,5 +62,5 @@ db.dbconecting()
 
 app.listen(3001,()=>{
 
-    console.log("server started")
+    console.log("server started");
 });

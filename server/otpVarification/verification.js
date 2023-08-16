@@ -18,16 +18,25 @@ const DB= require("../Database/dbtransfer")
            var otp = Math.random();
         otp = otp * 1000000;
         otp = parseInt(otp);
+        
+        const finalotp=otp
 
-        const sendotp=otp
+       const user_name_email={email:userdata.username,name:userdata.name}
 
-         otpsend_mail.varifi_mail(sendotp).then((respo)=>{   //sent otp to user enter email id 
+       const data={
+        sendotp:finalotp,
+        user:user_name_email
+       }
+
+
+         
+        otpsend_mail.varifi_mail(data).then((respo)=>{   //sent otp to user enter email id 
   
             if(respo.emailsend){
 
               const data={
               
-                otp:sendotp,
+                otp:finalotp,
                 details:userdata
                  
               }
