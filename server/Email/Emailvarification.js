@@ -2,19 +2,19 @@
 
 
 
-const nodemailer=require("nodemailer")
-const mailgen=require ('mailgen')
+const nodemailer=require("nodemailer");
+const mailgen=require ('mailgen');
 
 
 
-
+              //sent otp  signup time
 
   
 
 
   module.exports.varifi_mail=(data)=>{
 
-              console.log(data)
+              console.log(data);
 
             return new Promise((resolve,reject)=>{
 
@@ -68,30 +68,19 @@ const mailgen=require ('mailgen')
     
                     console.log("mailsent sucssfully");
                     
-                    resolve({emailsend:true})
+                    resolve({emailsend:true});
                 
                 }).catch(err=>{
     
                     console.log(" mail sent filled",err)
                    
-                    resolve({emailsend:false})
+                    resolve({emailsend:false});
     
                 });
 
+              });
 
-
-
-
-
-
-
-            })
-
-
-
-
-
-  }
+ };
 
 
 

@@ -1,6 +1,8 @@
 
 
-
+    
+                           //delete data method. data delete time check one condition .the condition is return marking to
+                           // now date  morthan 30 days  then sucssfully delete .    
 
 
 
@@ -12,7 +14,7 @@
         
                 if(!retundate){
                 
-                   resolve({redate:true})
+                   resolve({redate:true});
             
                     return 
             
@@ -20,7 +22,7 @@
                   }else{
             
             
-                    const repartdate=retundate
+                    const repartdate=retundate;
             
                    
             
@@ -31,9 +33,9 @@
                     
                     let cudate =mon+"-"+day+"-"+year;
             
-                    let redate= new Date(repartdate)
+                    let redate= new Date(repartdate);
             
-                    let curentdate= new Date(cudate)
+                    let curentdate= new Date(cudate);
             
             
                     let Difference_In_Time = curentdate.getTime() - redate.getTime();
@@ -42,26 +44,30 @@
                     var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
             
             
-                    console.log(Difference_In_Days)
+                    console.log(Difference_In_Days);
             
                      }
             
             
-                     if(Difference_In_Days >= 7){
+                     if(Difference_In_Days >= 30){
         
         
-                        resolve({flag:true})
+                        resolve({flag:true});
             
                         }else{
         
-                        resolve({flag:false})
+                        resolve({flag:false});
                     
                     }
         
         
-            })
+            });
         
          
-        }
+        };
+
+
+
+                                                           //end
         
         

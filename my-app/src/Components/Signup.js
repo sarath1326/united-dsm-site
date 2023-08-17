@@ -6,6 +6,7 @@ import { useState } from 'react'
 import axios from "../constant/Axios"
 import { useNavigate } from 'react-router-dom'
 import {message } from "antd" 
+import { Oval } from  'react-loader-spinner'
 
 function Signup() {
      
@@ -19,6 +20,7 @@ function Signup() {
   const [mobvalid,setmobvalid]=useState(false);
   const [emailvalid,setemailvalid]=useState(false);
   const [passvalid,setpassvalid]=useState(false);
+  const [loding,setloding]=useState(false)
 
    const data={
     name,
@@ -32,6 +34,8 @@ function Signup() {
   function signup(e){
 
     e.preventDefault();
+
+    setloding(true)
 
     axios.post("/signup",data).then((respo)=>{
 
@@ -73,7 +77,7 @@ function Signup() {
          required
          pattern='[a-zA-Z].{2,20}'
          onBlur={()=>{setnamevalid(true)}}
-         
+         autocomplete="off"
           onChange={(e)=>{setname(e.target.value)}}   
          
          /><br/>
@@ -87,7 +91,7 @@ function Signup() {
                 required
                 pattern='.{10}'
                 onBlur={()=>{setmobvalid(true)}}             
-         
+                autocomplete="off"
          onChange={(e)=>{setmobile(e.target.value)}}  
          
          /><br/>
@@ -100,7 +104,7 @@ function Signup() {
          required
                 
         onBlur={()=>{setemailvalid(true)}}
-         
+        autocomplete="off"
          onChange={(e)=>{setusername(e.target.value)}}   
          
          /><br/>
@@ -114,7 +118,7 @@ function Signup() {
                 required
                 pattern='.{4,}'
                 onBlur={()=>{setpassvalid(true)}}
-                
+                autocomplete="off"
          
          onChange={(e)=>{setpassword(e.target.value)}}   
          
@@ -127,8 +131,25 @@ function Signup() {
          <button className='btn-sig'> signup </button>
          
          </form> <br/>
-
         
+        <div className='loding'>
+         { loding ?
+         <Oval 
+  height={50}
+  width={50}
+  
+  color="black"
+  wrapperStyle={{}}
+  wrapperClass=""
+  visible={true}
+  ariaLabel='oval-loading'
+  secondaryColor="#4fa94d"
+  strokeWidth={2}
+  strokeWidthSecondary={2}
+
+/>
+   : null   }
+</div>
 
          </div>
 

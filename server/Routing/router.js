@@ -1,14 +1,14 @@
 
 
-const express=require("express")
+const express=require("express");
 
-const router=express.Router()
-const db=require("../Database/dbtransfer")
-const loginmail=require("../Email/Loginmail")
-const method=require("../Methods/deleteMethod")
-const emailvarification = require("../otpVarification/verification")
+const router=express.Router();
+const db=require("../Database/dbtransfer");
+const loginmail=require("../Email/Loginmail");
+const method=require("../Methods/deleteMethod");
+const emailvarification = require("../otpVarification/verification");
 
-const jwt =require("jsonwebtoken")
+const jwt =require("jsonwebtoken");
 
 
 
@@ -21,7 +21,7 @@ const jwt =require("jsonwebtoken")
 
     if(!token){
 
-        console.log("no token")
+        console.log("no token");
         
         res.json({faildauth:true});
 
@@ -31,25 +31,25 @@ const jwt =require("jsonwebtoken")
 
              if(result){
                 
-                next()
+                next();
             
             
             }else{
                 
-                console.log("not valid token")
+                console.log("not valid token");
                 
-                res.json({faildauth:true})
+                res.json({faildauth:true});
             
             
-            }
+            };
 
-        })
-
-
-    }
+        });
 
 
-}
+    };
+
+
+};
 
 
 
@@ -65,7 +65,7 @@ const jwt =require("jsonwebtoken")
 
 router.post("/post",(req,res)=>{     //new data ading req //
 
-    const data=req.body
+    const data=req.body;
 
     if(data){
 
@@ -77,7 +77,7 @@ router.post("/post",(req,res)=>{     //new data ading req //
 
             }else{
                 res.json({flag:false});
-            }
+            };
 
         }).catch(err=>{
 
@@ -95,32 +95,25 @@ router.get("/view/cat1",verifyauth,(req,res)=>{
 
       db.viewcat1().then((respo)=>{
 
-        res.json({details:respo,faildauth:false,title:"LLoyd",cat1fill:true})
+        res.json({details:respo,faildauth:false,title:"LLoyd",cat1fill:true});
 
         
 
-    })
+    });
 
-
-
-
-
-})
+});
 
 
 router.get("/view/cat2",verifyauth,(req,res)=>{
 
     db.viewcat2().then((respo)=>{
 
-        res.json({details:respo,faildauth:false,title:"blueberry,carrier",cat2fill:true})
+        res.json({details:respo,faildauth:false,title:"blueberry,carrier",cat2fill:true});
 
-    })
+    });
 
      
-
-
-
-})
+});
 
 
 router.get("/view/cat3",verifyauth,(req,res)=>{
@@ -129,14 +122,14 @@ router.get("/view/cat3",verifyauth,(req,res)=>{
 
     db.viewcat3().then((respo)=>{
 
-        res.json({details:respo,faildauth:false,title:"Akiva,Amstard,Onida",cat3fill:true})
+        res.json({details:respo,faildauth:false,title:"Akiva,Amstard,Onida",cat3fill:true});
 
 
         
    
-    })
+    });
 
-})
+});
 
 
 
@@ -144,16 +137,16 @@ router.post("/signup",(req,res)=>{
 
 
 
-    const email= req.body.username
+    const email= req.body.username;
 
       db.emailexist(email).then((respo)=>{   //this function chack user enter email allready exist 
 
             
             if(respo.exist){
 
-                res.json({signup:false})
+                res.json({signup:false});
                
-                console.log("exist")
+                console.log("exist");
                 
                 return
 
@@ -169,19 +162,17 @@ router.post("/signup",(req,res)=>{
                    
                     }else{
 
-                        res.json({signup:false})    
+                        res.json({signup:false});    
 
-                    }
+                    };
 
                 })
 
              }
 
-         })  
+         }) ; 
 
-})
-
-
+});
 
 
 
@@ -190,11 +181,13 @@ router.post("/signup",(req,res)=>{
 
 
 
-      router.post("/otpverifi",(req,res)=>{
 
-        const data=req.body
 
-         db.match_otp(data.otp).then((respo)=>{
+      router.post("/otpverifi",(req,res)=>{    
+
+        const data=req.body;
+
+         db.match_otp(data.otp).then((respo)=>{    //otp ferification 
 
             if(respo.flag){
 
@@ -202,18 +195,16 @@ router.post("/signup",(req,res)=>{
 
             }else{
 
-                res.json({varifi:false})
+                res.json({varifi:false});
             }
 
          }).catch(err=>{
             
-            res.sendStatus(500)
+            res.sendStatus(500);
          
-        }) 
+        }); 
 
-
-  
-     })  
+    });  
  
 
 
@@ -225,27 +216,27 @@ router.post("/signup",(req,res)=>{
 
 
 
-router.post("/login",(req,res)=>{
+router.post("/login",(req,res)=>{             //login req 
 
     db.login(req.body).then((result)=>{
 
         if(result.flag){
 
-            const user=result.data
+            const user=result.data;
 
-            const {name,_id}=user
+            const {name,_id}=user;
             
            // jwt token creation
 
            const token= jwt.sign({name:name,id:_id},"sarath1937" ,{
             
-            expiresIn:300
+            expiresIn:36000 
            
-        })
+        });
 
            
-           //mail sent
-             loginmail.loginmail();
+           
+             loginmail.loginmail();        //mail sent login notification   
 
              res.json({check:true,jwttoken:token});
 
@@ -256,23 +247,18 @@ router.post("/login",(req,res)=>{
 
         };
 
-          
-
-    
-        });
-
-
+          });
 
 });
 
 
-router.get("/username/navbar",(req,res)=>{
+router.get("/username/navbar",(req,res)=>{          //get login user name and sent to navbar
 
     const token= req.headers["jwt-token"];
 
     if(!token){
 
-        res.json({flag:false})
+        res.json({flag:false});
     
     }else{
 
@@ -280,56 +266,56 @@ router.get("/username/navbar",(req,res)=>{
 
             if(result){
 
-              res.json({flag:true,userdata:result})
+              res.json({flag:true,userdata:result});
 
 
 
             }else{
 
-                res.json({flag:false})
+                res.json({flag:false});
             }
 
-        })
+        });
 
     }
 
 
-})
+});
 
 
 
-    router.get("/partsend",(req,res)=>{
+    router.get("/partsend",(req,res)=>{            //defect part sent marking req
 
-        console.log(req.query.id)
+        console.log(req.query.id);
 
         db.retunmark(req.query.id).then((respo)=>{ 
 
             if(respo){
 
-              res.json({flag:true})
+              res.json({flag:true});
 
 
             }else{
 
-                res.json({flag:false})
+                res.json({flag:false});
 
                      
             
             }
 
-        })
+        });
 
 
 
 
 
-    })
+    });
 
 
 
-    router.delete("/delete",(req,res)=>{
+    router.delete("/delete",(req,res)=>{        //defect part delete req
 
-        const {id,retundate}=req.body
+        const {id,retundate}=req.body;
 
        
 
@@ -346,11 +332,11 @@ router.get("/username/navbar",(req,res)=>{
 
                 if(result){
 
-                    res.json({flag:true})
+                    res.json({flag:true});
         
                 }else{
 
-                    res.sendStatus(500)
+                    res.sendStatus(500);
                 }
 
               })
@@ -358,39 +344,17 @@ router.get("/username/navbar",(req,res)=>{
            
         }else{
 
-            res.json({flag:false})
+            res.json({flag:false});
         }
 
+});
 
 
-
-
-      })
-
-
-
-        
-
-
-
-    })
-
-
-
-
-   
-        
-
-
-
-
-
-
-
-
-
-
-
+  });
 
 
 module.exports=router;
+
+
+
+                                              //end

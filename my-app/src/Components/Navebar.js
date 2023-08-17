@@ -46,22 +46,48 @@ function Navebar() {
 
              }else{
 
-              setusername("")
+              setusername("");
              }
 
 
 
-        })
+        });
+
+   },[]);
 
 
+          function logout(){
+
+            localStorage.removeItem("token");
+            navigate("/")
 
 
+          } 
+          
+          function cat1(){
+  
+            const url="cat1";
+           
+            navigate(`/cat/${url}`);
+          
+          };
+
+          function cat2(){
+
+            const url="cat2"
+          
+          navigate(`/cat/${url}`);
+          
+          }
 
 
-      },[])
+          function cat3(){
 
-
-
+            const url="cat3"
+           
+            navigate(`/cat/${url}`);
+          }
+          
 
 
 
@@ -88,13 +114,13 @@ function Navebar() {
             <Nav.Link > <Link to={"/"} className='link'> Home</Link>   </Nav.Link>
             {/* <Nav.Link href="#action2">Link</Nav.Link> */}
             <NavDropdown title="Categorys" id="navbarScrollingDropdown">
-            <NavDropdown.Item >  <Link to={"/cat"} className='link' >Categorys 1</Link>   </NavDropdown.Item>
-              <NavDropdown.Item >
-              <Link className='link' to={"/cat2"}> Categorys 2   </Link>
+            <NavDropdown.Item onClick={cat1} >  category 1   </NavDropdown.Item>
+              <NavDropdown.Item onClick={cat2} >
+             category 2
               </NavDropdown.Item>
               {/* <NavDropdown.Divider /> */}
-              <NavDropdown.Item >
-              <Link className='link' to={"/cat3"}> Categorys 3 </Link>
+              <NavDropdown.Item onClick={cat3} >
+             Category 3
               </NavDropdown.Item>
             </NavDropdown>
 
@@ -111,7 +137,7 @@ function Navebar() {
 
       <Dropdown.Menu>
 
-        { uasername ?  <Dropdown.Item href="#/action-2">Logout</Dropdown.Item>
+        { uasername ?  <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
 
         :
              

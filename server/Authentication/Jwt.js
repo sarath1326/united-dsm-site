@@ -1,70 +1,60 @@
 
 
 
-const {sign,verify} =require("jsonwebtoken");
+// const {sign,verify} =require("jsonwebtoken");
 
 
-module.exports.createToken=(user)=>{
+// module.exports.createToken=(user)=>{
 
-        return new Promise ((resolve,reject)=>{
-
-
-            const accessToken= sign({username:user.username, id:user._id},"sarath1937")
-
-            resolve(accessToken)
+//         return new Promise ((resolve,reject)=>{
 
 
+//             const accessToken= sign({username:user.username, id:user._id},"sarath1937");
 
+//             resolve(accessToken);
 
+//     })
 
-
-        })
-
-
-
-
-}
+// }
 
 
 
         //acuthentication chaking  midilware jwt
 
 
-     module.exports.verifyauth=(req,res,next)=>{
+    //  module.exports.verifyauth=(req,res,next)=>{
 
 
-        const token= req.headers["jwt-token"];
+    //     const token= req.headers["jwt-token"];
 
-        if(!token){
+    //     if(!token){
 
-            res.json({auth:false});
-
-
-        }else{
-
-            verify(token,"sarath1937" ,(err,result)=>{
+    //         res.json({auth:false});
 
 
-                if(result){
+    //     }else{
+
+    //         verify(token,"sarath1937" ,(err,result)=>{
+
+
+    //             if(result){
 
                     
-                  next()
+    //               next()
                 
                 
-                }else{
+    //             }else{
                     
                     
-                    res.json({auth:false})
+    //                 res.json({auth:false})
                 
                 
-                }
+    //             }
 
-            })
-
-
-        }
+    //         })
 
 
+    //     }
 
 
 
@@ -72,7 +62,9 @@ module.exports.createToken=(user)=>{
 
 
 
-     }   
+
+
+    //  }   
 
 
 

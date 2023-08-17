@@ -7,7 +7,7 @@ const mailgen=require ('mailgen')
 
 
 
-
+                 //notification mail login time
   
 
 
@@ -72,18 +72,7 @@ const mailgen=require ('mailgen')
                     console.log(" mail sent filled",err)
     
                 });
-
-
-
-
-
-
-
-
-            })
-
-
-
-
-
-  }
+            
+            });
+        
+        };

@@ -238,7 +238,7 @@ function Category() {
 
       } else {
 
-        message.error("this part delete after 7 days");
+        message.error("this part delete after 30 days");
 
       };
 
@@ -253,7 +253,7 @@ function Category() {
 
   const [pageNumber, setPageNumber] = useState(0);
 
-  const userPrePage = 2;
+  const userPrePage = 8;
   const pageVisited = pageNumber * userPrePage;
 
   const pageCount = Math.ceil(fetchdata.length / userPrePage);
