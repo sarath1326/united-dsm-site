@@ -224,7 +224,7 @@ router.post("/login",(req,res)=>{             //login req
 
             const user=result.data;
 
-            const {name,_id}=user;
+            const {name,_id,username}=user;
             
            // jwt token creation
 
@@ -234,9 +234,12 @@ router.post("/login",(req,res)=>{             //login req
            
         });
 
+             const mailData={
+                name:name,
+                mailid:username
+             }
            
-           
-             loginmail.loginmail();        //mail sent login notification   
+             loginmail.loginmail(mailData);        //mail sent login notification   
 
              res.json({check:true,jwttoken:token});
 

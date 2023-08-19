@@ -11,7 +11,7 @@ const mailgen=require ('mailgen')
   
 
 
-  module.exports.loginmail=()=>{
+  module.exports.loginmail=(data)=>{
 
 
 
@@ -45,8 +45,8 @@ const mailgen=require ('mailgen')
     
                 let responces={
                     body:{
-                        name:"sarath pm",
-                        intro: " you are succsusfully login to united service DSM"
+                        name:`${data.name}`,
+                        intro: " you are successfuly login to united service DSM"
     
                     }
                 }
@@ -57,7 +57,7 @@ const mailgen=require ('mailgen')
                 let message={
     
                     from:"sarathsarath93366@gmail.com",
-                    to:"sarathsarath93366@gmail.com",
+                    to:`${data.mailid}`,
                     subject:"login conformation",
                     html:mail
                 };
