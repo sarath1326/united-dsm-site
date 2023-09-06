@@ -4,10 +4,22 @@ const mongoose=require("mongoose");
 
 
 module.exports.dbconecting=()=>{
+
+    const atlas="mongodb+srv://sarathsarath93366:sarath1937@cluster0.6ryiqal.mongodb.net/?retryWrites=true&w=majority"
+
+
+    mongoose.connect(atlas).then(()=>{
+
+        console.log("mongoDB connected");
+
+    }).catch(err=>{
+
+        console.log("DB connecting failed");
+
+    })
     
 
-    mongoose.connect('mongodb://127.0.0.1:27017/uniteddsm')
-.then(() => console.log("DB connected"));
+   
 
 }
 

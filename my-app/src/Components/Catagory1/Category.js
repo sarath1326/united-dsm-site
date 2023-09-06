@@ -18,6 +18,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ReactPaginate from "react-paginate"
 import { BiSolidErrorAlt } from "react-icons/bi";
 import { useParams } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner'
+
+
 
 
 
@@ -39,6 +42,8 @@ function Category() {
   const [cat2_filter, setcat2_fillter] = useState(false)
   const [cat3_filter, setcat3_fillter] = useState(false)
   const [filteropt, setfilteropt] = useState("All")
+  const [empty, setempty] = useState(false)
+  const [loding, setloding] = useState(true)
 
   const navigate = useNavigate();
 
@@ -66,6 +71,7 @@ function Category() {
 
       const fetchrespo = result.data
 
+
       console.log("fetchdata", fetchrespo);
 
 
@@ -78,7 +84,17 @@ function Category() {
 
         const result = fetchrespo.details
 
+        if(result.data.length===0){
+
+          setempty(true)
+        }
+
         setfetchdata(result.data, { partretun: false });
+
+        setloding(false)
+
+       
+       
 
         setfillterdata(result.data);
         settitle(fetchrespo.title)
@@ -115,6 +131,10 @@ function Category() {
 
 
 
+    }).catch(err=>{
+
+      console.log("backend err")
+
     });
 
 
@@ -137,7 +157,18 @@ function Category() {
 
     const res = fillterdata.filter(obj => obj.cuname.toLowerCase().includes(value) || obj.mobile.includes(value));
 
-    setfetchdata(res);
+    if(res.length===0){
+      
+      setempty(true)
+    
+    }else{
+
+      setfetchdata(res);
+      setempty(false)
+
+    }
+
+    
 
   }
 
@@ -387,59 +418,107 @@ function Category() {
         </div>
 
 
-        <Table striped bordered hover className='container  '>
+        {
 
-          <thead>
-            <tr>
+          loding ?   //loding spinner addd
 
-              {/* <th> no</th> */}
-              <th>customer name</th>
-              <th> mobile no</th>
-              <th>brand  </th>
-              <th>product</th>
-              <th> defect part</th>
-              <th> enter date</th>
-              <th> return marking</th>
-              <th> Delete</th>
+            <div className='empty-div'>
 
+              <Oval
+                height={80}
+                width={50}
+                color="#0E21A0"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel='oval-loading'
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
 
-
-
-
-            </tr>
-
-          </thead>
-          <tbody>
-
-
-           
-            {       displyaData }
+              />
 
 
 
-          </tbody>
-
-        </Table>
-
-        <ReactPaginate
-
-          previousLabel={"previous"}
-
-          nextLabel={"next"}
-
-          pageCount={pageCount}
-
-          onPageChange={changePage}
-
-          containerClassName={"paginationBttns"}
-          pageLinkClassName={"previousBttn"}
-          nextLinkClassName={"nextBttn"}
-          disabledClassName={"paginationDisabled"}
-          activeClassName={"paginationActive"}
-        />
+            </div>
 
 
-        
+            :
+
+            empty ?     //fetchdata empty time show this image
+
+              <div className='empty-div'>
+
+                <img className='empty-img' src='../noresult.jpeg ' alt='loding...' />
+
+
+
+              </div>
+
+
+
+              :
+
+              <>
+
+
+                <Table striped bordered hover className='container  '>
+
+                  <thead>
+                    <tr>
+
+                      {/* <th> no</th> */}
+                      <th>customer name</th>
+                      <th> mobile no</th>
+                      <th>brand  </th>
+                      <th>product</th>
+                      <th> defect part</th>
+                      <th> enter date</th>
+                      <th> return marking</th>
+                      <th> Delete</th>
+
+
+
+
+
+                    </tr>
+
+                  </thead>
+                  <tbody>
+
+
+
+                    {displyaData}
+
+
+
+                  </tbody>
+
+                </Table>
+
+                <ReactPaginate
+
+                  previousLabel={"previous"}
+
+                  nextLabel={"next"}
+
+                  pageCount={pageCount}
+
+                  onPageChange={changePage}
+
+                  containerClassName={"paginationBttns"}
+                  pageLinkClassName={"previousBttn"}
+                  nextLinkClassName={"nextBttn"}
+                  disabledClassName={"paginationDisabled"}
+                  activeClassName={"paginationActive"}
+                />
+
+              </>
+
+        }
+
+
+
 
         {   //this is a aert box. press delete icon this box show on //
 

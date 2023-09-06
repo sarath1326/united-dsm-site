@@ -25,12 +25,12 @@ const DB= require("../Database/dbtransfer")
         
         const finalotp=otp
 
-       const user_name_email={email:userdata.username,name:userdata.name}
+       const user_name_email={email:userdata.username,name:userdata.name};
 
        const data={
         sendotp:finalotp,
         user:user_name_email
-       }
+       };
 
 
          
