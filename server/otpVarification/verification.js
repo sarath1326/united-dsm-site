@@ -5,7 +5,7 @@ const { otpGen } = require('otp-gen-agent');
 
 
 const otpsend_mail= require("../Email/Emailvarification")
-const DB= require("../Database/dbtransfer")
+const DB= require("../Model/dbtransfer")
 
 
 
@@ -45,7 +45,7 @@ const DB= require("../Database/dbtransfer")
                  
               }
 
-               DB.save_otp(data);      //this function use save otp and email id in DB
+             DB.save_otp(data);      //this function use save otp and email id in DB
              
                 resolve({flag:true});
 

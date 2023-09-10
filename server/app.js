@@ -4,7 +4,7 @@ const express=require("express");
 const app=express();
 
 const router=require("./Routing/router");
-const db=require("./Database/dbconecting")
+const db=require("./Model/dbconecting")
 
 const cors=require("cors")
 const session=require('express-session');

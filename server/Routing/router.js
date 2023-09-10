@@ -3,7 +3,7 @@
 const express=require("express");
 
 const router=express.Router();
-const db=require("../Database/dbtransfer");
+const db=require("../Model/dbtransfer");
 const loginmail=require("../Email/Loginmail");
 const method=require("../Methods/deleteMethod");
 const emailvarification = require("../otpVarification/verification");

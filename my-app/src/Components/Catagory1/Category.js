@@ -180,6 +180,8 @@ function Category() {
 
     if (value == "all") {
 
+
+
       console.log("all");
       setfetchdata(fillterdata);
 
