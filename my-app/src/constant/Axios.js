@@ -1,7 +1,7 @@
 
 import axios from "axios"
 
-const baiUrl="http://localhost:3001"
+const baiUrl="https://united-service-dsm.onrender.com"
 
 
 const instance=axios.create({
